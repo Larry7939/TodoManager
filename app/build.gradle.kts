@@ -69,4 +69,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     // Timber
     implementation(libs.timber)
+    implementation(libs.appCompat)
 }
