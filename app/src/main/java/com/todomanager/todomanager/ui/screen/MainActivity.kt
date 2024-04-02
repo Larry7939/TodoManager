@@ -1,4 +1,4 @@
-package com.todomanager.todomanager
+package com.todomanager.todomanager.ui.screen
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
+import com.todomanager.todomanager.util.devTimberLog
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
