@@ -18,5 +18,6 @@ val G5 = Color(0xFFD9D9D9)
 val G6 = Color(0xFFE7E7E7)
 
 val B1 = Color(0xFF00B0F0)
+val B2 = Color(0xFF50D0FF)
 
 val O1 = Color(0xFFEE7B33)
