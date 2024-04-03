@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Todo Manager</string>
+    <string name="input_name">Name</string>
+    <string name="input_Birthday">Birthday</string>
 </resources>
