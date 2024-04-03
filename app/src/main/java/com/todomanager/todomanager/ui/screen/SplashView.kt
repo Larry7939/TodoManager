@@ -40,7 +40,8 @@ class SplashView {
         LaunchedEffect(progress) {
             if (progress == 1f) {
                 delay(SPLASH_DELAY)
-                navController.navigate(Destination.MAIN)
+                // SharedPreference에서 등록 여부 참조하여 사용자 등록 뷰 or 투두리스트 뷰로 이동
+                navController.navigate(Destination.REGISTER)
             }
         }
 
