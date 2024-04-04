@@ -91,7 +91,10 @@ class RegisterView {
                     isDatePickerDialogVisible = true
                 }
                 Spacer(modifier = Modifier.height(190.dp))
-                CtaButton().TextButton(stringResource(id = R.string.cta_register), isRegisterEnable) { }
+                CtaButton().TextButton(
+                    stringResource(id = R.string.cta_register),
+                    isRegisterEnable
+                ) { }
             }
             if (isDatePickerDialogVisible) {
                 PickerDialog().CustomDatePickerDialog(

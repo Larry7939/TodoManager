@@ -30,12 +30,12 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TodoManagerTheme {
+    @Preview(showBackground = true)
+    @Composable
+    fun GreetingPreview() {
+        TodoManagerTheme {
 
+        }
     }
 }
