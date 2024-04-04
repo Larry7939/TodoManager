@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -36,18 +37,21 @@ import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.Typography
 
 class RegisterView {
+
     @Composable
     fun RegisterScreen() {
         val focusRequester = remember { FocusRequester() }
         val focusManager = LocalFocusManager.current
         var nameTextLength by remember { mutableIntStateOf(0) }
         val keyboardController = LocalSoftwareKeyboardController.current
+        var isDatePickerDialogVisible by remember { mutableStateOf(false) }
+        var date by remember { mutableStateOf("") }
         Surface(modifier = Modifier
             .fillMaxSize()
             .clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
-            ) { removeFocus(keyboardController, focusManager) }) {
+            ) { removeInputNameFocus(keyboardController, focusManager) }) {
             Column(
                 modifier = Modifier.padding(top = 85.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -70,11 +74,19 @@ class RegisterView {
                     style = Typography.displaySmall,
                     color = B1
                 )
+                Spacer(modifier = Modifier.height(15.dp))
+                EditView().DateTextField(date) {
+                    removeInputNameFocus(keyboardController, focusManager)
+                    isDatePickerDialogVisible = true
+                }
+            }
+            if (isDatePickerDialogVisible) {
+                DateTimePickerDialog().DatePickerDialog(onDateSelected = { date = it }, onDismiss = { isDatePickerDialogVisible = false })
             }
         }
     }
 
-    private fun removeFocus(
+    private fun removeInputNameFocus(
         keyboardController: SoftwareKeyboardController?,
         focusManager: FocusManager
     ) {

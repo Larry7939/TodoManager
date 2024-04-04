@@ -1,6 +1,7 @@
 package com.todomanager.todomanager.ui.screen
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,12 +25,15 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.todomanager.todomanager.R
 import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.G5
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
+import com.todomanager.todomanager.ui.theme.Typography
 
 class EditView {
 
@@ -59,7 +63,7 @@ class EditView {
                     isFocused = it.isFocused
                 },
                 singleLine = maxLines == 1,
-                textStyle = LocalTextStyle.current.copy(color = Color.Black),
+                textStyle = Typography.bodyLarge,
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions { focusManager.clearFocus() },
                 maxLines = maxLines,
@@ -77,11 +81,35 @@ class EditView {
                         contentAlignment = Alignment.CenterStart
                     ) {
                         if (textState.isEmpty() && !isFocused) {
-                            Text(color = G5, text = hint)
+                            Text(color = G5, text = hint, style = Typography.bodyLarge)
                         }
                         innerTextField()
                     }
                 }
+            )
+        }
+    }
+
+    @Composable
+    fun DateTextField(date: String, onClick: () -> Unit) {
+        val text = date.ifEmpty { stringResource(id = R.string.input_Birthday) }
+        val textColor = if (date.isEmpty()) G5 else Color.Black
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(65.dp)
+                .padding(horizontal = 20.dp)
+                .border(width = 2.dp, B1, shape = RoundedCornerShape(30.dp))
+                .clickable { onClick() }
+        ) {
+            Text(
+                modifier = Modifier
+                    .padding(start = 30.dp)
+                    .align(Alignment.CenterStart),
+                text = text,
+                color = textColor,
+                style = Typography.bodyLarge
             )
         }
     }
