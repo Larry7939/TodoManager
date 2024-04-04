@@ -93,6 +93,7 @@ class RegisterView {
             }
             if (isDatePickerDialogVisible) {
                 PickerDialog().CustomDatePickerDialog(
+                    isFutureSelectable = false,
                     onDateSelected = { date = it },
                     onDismiss = { isDatePickerDialogVisible = false })
             }
