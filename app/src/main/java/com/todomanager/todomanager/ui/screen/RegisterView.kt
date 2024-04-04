@@ -114,7 +114,21 @@ class RegisterView {
     }
 
     @Composable
-    fun ProfileImage() {
+    fun ProfileImage(context: Context, uri: String, onClick: () -> Unit) {
+        val painter = if (uri.isNotEmpty()) {
+            rememberAsyncImagePainter(uri)
+        } else {
+            painterResource(id = R.drawable.ic_photo_profile)
+        }
+
+        val modifier = if (uri.isNotEmpty()) {
+            Modifier.fillMaxSize().graphicsLayer {
+                scaleX = -1f
+            }
+        } else {
+            Modifier
+        }
+
         Box(
             modifier = Modifier
                 .wrapContentSize()
@@ -128,8 +142,9 @@ class RegisterView {
                 }
         ) {
             Image(
-                modifier = Modifier.align(Alignment.Center),
-                painter = painterResource(id = R.drawable.ic_photo_profile),
+                modifier = modifier.align(Alignment.Center),
+                painter = painter,
+                contentScale = ContentScale.Crop,
                 contentDescription = "photo_profile"
             )
         }
