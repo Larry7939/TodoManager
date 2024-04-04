@@ -5,4 +5,5 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="cta_register">Register</string>
+    <string name="take_picture">"사진 촬영"</string>
 </resources>
