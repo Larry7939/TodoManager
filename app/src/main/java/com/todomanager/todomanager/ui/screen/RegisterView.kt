@@ -40,6 +40,8 @@ import com.todomanager.todomanager.ui.dialog.PickerDialog
 import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.Typography
 import com.todomanager.todomanager.util.devTimberLog
+import com.todomanager.todomanager.util.Utils.requestPermission
+
 
 class RegisterView {
 
@@ -116,6 +118,11 @@ class RegisterView {
                 .size(150.dp)
                 .clip(CircleShape)
                 .background(B1)
+                .clickable {
+                    requestPermission(context = context, permission = Manifest.permission.CAMERA) {
+                        onClick()
+                    }
+                }
         ) {
             Image(
                 modifier = Modifier.align(Alignment.Center),

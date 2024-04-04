@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.navigation)
     implementation(libs.compose)
     implementation(libs.lottie)
+    implementation(libs.tedPermission)
     implementation(libs.cameraView)
     implementation(libs.camera)
     implementation(libs.cameraLifecycle)
