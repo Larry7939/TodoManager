@@ -1,15 +1,22 @@
 package com.todomanager.todomanager.ui.dialog
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerColors
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.todomanager.todomanager.R
+import com.todomanager.todomanager.ui.theme.B1
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -41,13 +48,17 @@ class PickerDialog {
         DatePickerDialog(
             onDismissRequest = { onDismiss() },
             confirmButton = {
-                Button(onClick = {
+                Button(
+                    colors = ButtonColors(B1,Color.White,B1,B1),
+                    onClick = {
                     onDateSelected(selectedDate)
                     onDismiss()
                 }) { Text(text = stringResource(id = R.string.ok)) }
             },
             dismissButton = {
-                Button(onClick = {
+                Button(
+                    colors = ButtonColors(B1,Color.White,B1,B1),
+                    onClick = {
                     onDismiss()
                 }) { Text(text = stringResource(id = R.string.cancel)) }
             }
