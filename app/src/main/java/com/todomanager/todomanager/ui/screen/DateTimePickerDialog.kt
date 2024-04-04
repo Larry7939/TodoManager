@@ -33,23 +33,15 @@ class DateTimePickerDialog {
                 Button(onClick = {
                     onDateSelected(selectedDate)
                     onDismiss()
-                }
-
-                ) {
-                    Text(text = stringResource(id = R.string.OK))
-                }
+                }) { Text(text = stringResource(id = R.string.OK)) }
             },
             dismissButton = {
                 Button(onClick = {
                     onDismiss()
-                }) {
-                    Text(text = stringResource(id = R.string.CANCEL))
-                }
+                }) { Text(text = stringResource(id = R.string.CANCEL)) }
             }
         ) {
-            DatePicker(
-                state = datePickerState
-            )
+            DatePicker(state = datePickerState)
         }
     }
 
