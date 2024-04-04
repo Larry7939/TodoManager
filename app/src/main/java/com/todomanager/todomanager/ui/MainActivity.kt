@@ -1,4 +1,4 @@
-package com.todomanager.todomanager.ui.screen
+package com.todomanager.todomanager.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,6 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.todomanager.todomanager.constant.Destination
+import com.todomanager.todomanager.ui.screen.RegisterView
+import com.todomanager.todomanager.ui.screen.SplashView
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
 
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package com.todomanager.todomanager.ui.screen
+package com.todomanager.todomanager.ui.textfield
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -35,7 +35,7 @@ import com.todomanager.todomanager.ui.theme.G5
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
 import com.todomanager.todomanager.ui.theme.Typography
 
-class EditView {
+class InputTextField {
 
     @Composable
     fun InputTextField(

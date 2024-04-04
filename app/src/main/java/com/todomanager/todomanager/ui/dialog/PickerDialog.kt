@@ -1,4 +1,4 @@
-package com.todomanager.todomanager.ui.screen
+package com.todomanager.todomanager.ui.dialog
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class DateTimePickerDialog {
+class PickerDialog {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable

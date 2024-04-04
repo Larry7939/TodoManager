@@ -33,6 +33,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.todomanager.todomanager.R
+import com.todomanager.todomanager.ui.textfield.InputTextField
+import com.todomanager.todomanager.ui.dialog.PickerDialog
 import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.Typography
 
@@ -58,7 +60,7 @@ class RegisterView {
             ) {
                 ProfileImage()
                 Spacer(modifier = Modifier.height(80.dp))
-                EditView().InputTextField(
+                InputTextField().InputTextField(
                     hint = stringResource(id = R.string.input_name),
                     maxLength = INPUT_NAME_MAX_LENGTH,
                     focusRequester = focusRequester,
@@ -75,13 +77,13 @@ class RegisterView {
                     color = B1
                 )
                 Spacer(modifier = Modifier.height(15.dp))
-                EditView().DateTextField(date) {
+                InputTextField().DateTextField(date) {
                     removeInputNameFocus(keyboardController, focusManager)
                     isDatePickerDialogVisible = true
                 }
             }
             if (isDatePickerDialogVisible) {
-                DateTimePickerDialog().CustomDatePickerDialog(
+                PickerDialog().CustomDatePickerDialog(
                     onDateSelected = { date = it },
                     onDismiss = { isDatePickerDialogVisible = false })
             }
@@ -95,6 +97,24 @@ class RegisterView {
         keyboardController?.hide()
         focusManager.clearFocus()
     }
+
+    @Composable
+    fun ProfileImage() {
+        Box(
+            modifier = Modifier
+                .wrapContentSize()
+                .size(150.dp)
+                .clip(CircleShape)
+                .background(B1)
+        ) {
+            Image(
+                modifier = Modifier.align(Alignment.Center),
+                painter = painterResource(id = R.drawable.ic_photo_profile),
+                contentDescription = "photo_profile"
+            )
+        }
+    }
+
     companion object {
         const val INPUT_NAME_MAX_LENGTH = 15
     }
