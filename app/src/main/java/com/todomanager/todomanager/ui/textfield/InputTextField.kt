@@ -38,7 +38,7 @@ import com.todomanager.todomanager.ui.theme.Typography
 class InputTextField {
 
     @Composable
-    fun InputTextField(
+    fun CustomOutlinedTextField(
         hint: String,
         maxLines: Int = 1,
         maxLength: Int = 50,

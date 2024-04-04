@@ -60,7 +60,7 @@ class RegisterView {
             ) {
                 ProfileImage()
                 Spacer(modifier = Modifier.height(80.dp))
-                InputTextField().InputTextField(
+                InputTextField().CustomOutlinedTextField(
                     hint = stringResource(id = R.string.input_name),
                     maxLength = INPUT_NAME_MAX_LENGTH,
                     focusRequester = focusRequester,
