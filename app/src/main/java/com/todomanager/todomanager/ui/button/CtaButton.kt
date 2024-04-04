@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.G5
@@ -31,7 +32,7 @@ class CtaButton {
                 .padding(horizontal = 20.dp)
                 .background(color = buttonBackgroundColor, shape = RoundedCornerShape(30.dp))
                 .clickable(enabled = isActivated,
-                    indication = rememberRipple(radius = 20.dp),
+                    indication = rememberRipple(radius = 155.dp),
                     interactionSource = remember { MutableInteractionSource() }) { onClick() }
         ) {
             Text(
