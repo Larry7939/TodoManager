@@ -2,6 +2,7 @@
     <string name="app_name">Todo Manager</string>
     <string name="input_name">Name</string>
     <string name="input_Birthday">Birthday</string>
-    <string name="OK">OK</string>
-    <string name="CANCEL">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="cta_register">Register</string>
 </resources>
