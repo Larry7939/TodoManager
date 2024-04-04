@@ -2,6 +2,7 @@ package com.todomanager.todomanager.ui.screen
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
@@ -16,7 +17,7 @@ class DateTimePickerDialog {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun DatePickerDialog(
+    fun CustomDatePickerDialog(
         onDateSelected: (String) -> Unit,
         onDismiss: () -> Unit
     ) {
@@ -26,7 +27,7 @@ class DateTimePickerDialog {
             convertMillisToDate(it)
         } ?: ""
 
-        androidx.compose.material3.DatePickerDialog(
+        DatePickerDialog(
             onDismissRequest = { onDismiss() },
             confirmButton = {
                 Button(onClick = {

@@ -81,7 +81,7 @@ class RegisterView {
                 }
             }
             if (isDatePickerDialogVisible) {
-                DateTimePickerDialog().DatePickerDialog(onDateSelected = { date = it }, onDismiss = { isDatePickerDialogVisible = false })
+                DateTimePickerDialog().CustomDatePickerDialog(onDateSelected = { date = it }, onDismiss = { isDatePickerDialogVisible = false })
             }
         }
     }
