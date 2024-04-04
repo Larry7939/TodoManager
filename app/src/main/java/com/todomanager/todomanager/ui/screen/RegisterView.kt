@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -33,10 +34,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.todomanager.todomanager.R
+import com.todomanager.todomanager.ui.button.CtaButton
 import com.todomanager.todomanager.ui.textfield.InputTextField
 import com.todomanager.todomanager.ui.dialog.PickerDialog
 import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.Typography
+import com.todomanager.todomanager.util.devTimberLog
 
 class RegisterView {
 
@@ -48,6 +51,10 @@ class RegisterView {
         val keyboardController = LocalSoftwareKeyboardController.current
         var isDatePickerDialogVisible by remember { mutableStateOf(false) }
         var date by remember { mutableStateOf("") }
+        var isRegisterEnable by remember { mutableStateOf(false) }
+        LaunchedEffect(nameTextLength, date) {
+            isRegisterEnable = nameTextLength > 0 && date.isNotEmpty()
+        }
         Surface(modifier = Modifier
             .fillMaxSize()
             .clickable(
@@ -81,6 +88,8 @@ class RegisterView {
                     removeInputNameFocus(keyboardController, focusManager)
                     isDatePickerDialogVisible = true
                 }
+                Spacer(modifier = Modifier.height(190.dp))
+                CtaButton().TextButton(stringResource(id = R.string.cta_register), isRegisterEnable) { }
             }
             if (isDatePickerDialogVisible) {
                 PickerDialog().CustomDatePickerDialog(
