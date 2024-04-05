@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.todomanager.todomanager.R
@@ -49,6 +50,8 @@ class InputTextField {
     ) {
         var textState by rememberSaveable { mutableStateOf("") }
         var isFocused by remember { mutableStateOf(false) }
+
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -70,9 +73,9 @@ class InputTextField {
                 maxLines = maxLines,
                 cursorBrush = SolidColor(B1),
                 value = textState,
-                onValueChange = {
-                    if (textState.length < maxLength || it.length < textState.length) {
-                        textState = it
+                onValueChange = { newText ->
+                    if (textState.length < maxLength || newText.length < textState.length) {
+                        textState = newText.filter { it.isEnglishLetter() }
                         onTextChanged(textState)
                     }
                 },
@@ -116,6 +119,12 @@ class InputTextField {
             )
         }
     }
+
+    private fun Char.isEnglishLetter(): Boolean {
+        val unicodeBlock = Character.UnicodeBlock.of(this)
+        return (unicodeBlock == Character.UnicodeBlock.BASIC_LATIN)
+    }
+
 
     @Preview(showBackground = true)
     @Composable
