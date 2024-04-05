@@ -48,6 +48,9 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     }
+                    composable(route = Destination.REGISTER_COMPLETE) {
+                        RegisterCompleteView().RegisterCompleteScreen()
+                    }
                 }
             }
         }

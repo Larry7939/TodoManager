@@ -19,6 +19,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -41,26 +42,48 @@ import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.todomanager.todomanager.R
-import com.todomanager.todomanager.constant.NavArgKey.PROFILE_IMAGE_KEY
+import com.todomanager.todomanager.constant.Destination
 import com.todomanager.todomanager.constant.Destination.CAMERA
+import com.todomanager.todomanager.constant.IOState.FAILURE
+import com.todomanager.todomanager.constant.IOState.IDLE
+import com.todomanager.todomanager.constant.IOState.SUCCESS
+import com.todomanager.todomanager.constant.NavArgKey.PROFILE_IMAGE_KEY
+import com.todomanager.todomanager.dto.Profile
 import com.todomanager.todomanager.ui.button.CtaButton
 import com.todomanager.todomanager.ui.dialog.PickerDialog
 import com.todomanager.todomanager.ui.textfield.InputTextField
 import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.Typography
 import com.todomanager.todomanager.util.Utils.requestPermission
-
+import com.todomanager.todomanager.util.Utils.showToast
+import com.todomanager.todomanager.util.devTimberLog
 
 class RegisterView {
 
     @Composable
+    fun AddObserver(navController: NavHostController, registerViewModel: RegisterViewModel) {
+        val setProfileState by registerViewModel.setProfileState.collectAsState()
+        if (setProfileState == SUCCESS) {
+
+        } else if (setProfileState == FAILURE) {
+            LocalContext.current.showToast(stringResource(id = R.string.register_failure))
+            registerViewModel.updateSetProfileState(IDLE)
+        }
+    }
+
+    @Composable
     fun RegisterScreen(navController: NavHostController) {
+        val registerViewModel: RegisterViewModel = hiltViewModel()
+        AddObserver(navController, registerViewModel)
+
         val focusRequester = remember { FocusRequester() }
         val focusManager = LocalFocusManager.current
         var nameTextLength by rememberSaveable { mutableIntStateOf(0) }
+        var name by rememberSaveable { mutableStateOf("") }
         val keyboardController = LocalSoftwareKeyboardController.current
         var isDatePickerDialogVisible by remember { mutableStateOf(false) }
         var date by rememberSaveable { mutableStateOf("") }
@@ -108,7 +131,15 @@ class RegisterView {
                 CtaButton().TextButton(
                     stringResource(id = R.string.cta_register),
                     isRegisterEnable
-                ) { }
+                ) {
+                    registerViewModel.setProfile(
+                        Profile(
+                            uri = profileUri ?: "",
+                            name = name,
+                            birthday = date
+                        )
+                    )
+                }
             }
             if (isDatePickerDialogVisible) {
                 PickerDialog().CustomDatePickerDialog(
