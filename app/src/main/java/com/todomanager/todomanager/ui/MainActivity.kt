@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
                         RegisterView().RegisterScreen(navController)
                     }
                     composable(route = Destination.CAMERA) {
-                        CameraView().CameraScreen(navController) { uri ->
+                        CameraView().CameraScreen() { uri ->
                             navController.navigate("${Destination.REGISTER}?$PROFILE_IMAGE_KEY=$uri") {
                                 launchSingleTop = true
                                 popUpTo(Destination.CAMERA) {

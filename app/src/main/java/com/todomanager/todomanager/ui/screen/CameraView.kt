@@ -31,7 +31,7 @@ import java.io.File
 
 class CameraView {
     @Composable
-    fun CameraScreen(navController: NavController, getUri: (Uri)->Unit) {
+    fun CameraScreen(getUri: (Uri)->Unit) {
         val storagePath = LocalContext.current.filesDir.absolutePath
         val lifecycleOwner = LocalLifecycleOwner.current
         val cameraScope = rememberCoroutineScope()
