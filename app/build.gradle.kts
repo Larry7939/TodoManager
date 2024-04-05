@@ -76,4 +76,5 @@ dependencies {
     implementation(libs.cameraView)
     implementation(libs.camera)
     implementation(libs.cameraLifecycle)
+    implementation(libs.coil)
 }
