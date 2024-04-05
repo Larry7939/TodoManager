@@ -77,4 +77,5 @@ dependencies {
     implementation(libs.camera)
     implementation(libs.cameraLifecycle)
     implementation(libs.coil)
+    implementation(libs.hilt)
 }

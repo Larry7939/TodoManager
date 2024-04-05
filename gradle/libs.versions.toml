@@ -16,6 +16,7 @@ lottie = "6.4.0"
 tedPermission = "3.3.0"
 camera = "1.4.0-alpha04"
 coil = "2.6.0"
+hilt = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,6 +51,8 @@ camera = { module = "androidx.camera:camera-camera2", version.ref = "camera"}
 cameraLifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camera"}
 #Coil
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil"}
+#Hilt
+hilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

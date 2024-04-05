@@ -16,7 +16,9 @@ import com.todomanager.todomanager.ui.screen.CameraView
 import com.todomanager.todomanager.ui.screen.RegisterView
 import com.todomanager.todomanager.ui.screen.SplashView
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
