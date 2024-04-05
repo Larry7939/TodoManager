@@ -16,6 +16,7 @@ import com.todomanager.todomanager.ui.screen.CameraView
 import com.todomanager.todomanager.ui.screen.RegisterView
 import com.todomanager.todomanager.ui.screen.SplashView
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
+import com.todomanager.todomanager.util.devTimberLog
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,12 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(route = Destination.CAMERA) {
                         CameraView().CameraScreen(navController) { uri ->
-                            navController.navigate("${Destination.REGISTER}?$PROFILE_IMAGE_KEY=$uri")
+                            navController.navigate("${Destination.REGISTER}?$PROFILE_IMAGE_KEY=$uri") {
+                                launchSingleTop = true
+                                popUpTo(Destination.CAMERA) {
+                                    inclusive = true
+                                }
+                            }
                         }
                     }
                 }
