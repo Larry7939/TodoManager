@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +36,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -59,13 +61,13 @@ class RegisterView {
     fun RegisterScreen(navController: NavHostController) {
         val focusRequester = remember { FocusRequester() }
         val focusManager = LocalFocusManager.current
-        var nameTextLength by remember { mutableIntStateOf(0) }
+        var nameTextLength by rememberSaveable { mutableIntStateOf(0) }
         val keyboardController = LocalSoftwareKeyboardController.current
         var isDatePickerDialogVisible by remember { mutableStateOf(false) }
-        var date by remember { mutableStateOf("") }
+        var date by rememberSaveable { mutableStateOf("") }
         var isRegisterEnable by remember { mutableStateOf(false) }
 
-        var profileUri: String? by remember { mutableStateOf("") }
+        var profileUri: String? by rememberSaveable { mutableStateOf("") }
         profileUri = navController.currentBackStackEntry?.arguments?.getString(PROFILE_IMAGE_KEY)
 
         LaunchedEffect(nameTextLength, date) {
