@@ -10,13 +10,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.todomanager.todomanager.constant.ArgumentKey.PROFILE_IMAGE_KEY
+import com.todomanager.todomanager.constant.NavArgKey.PROFILE_IMAGE_KEY
 import com.todomanager.todomanager.constant.Destination
 import com.todomanager.todomanager.ui.screen.CameraView
 import com.todomanager.todomanager.ui.screen.RegisterView
 import com.todomanager.todomanager.ui.screen.SplashView
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
-import com.todomanager.todomanager.util.devTimberLog
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
