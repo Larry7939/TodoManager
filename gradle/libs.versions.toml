@@ -19,6 +19,9 @@ coil = "2.6.0"
 hilt = "2.49"
 hiltCompose = "1.2.0"
 hiltPlugin = "2.44"
+serializationJson = "1.2.1"
+serialization = "1.9.0"
+stdlib = "1.9.22"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -57,6 +60,11 @@ coil = { module = "io.coil-kt:coil-compose", version.ref = "coil"}
 hiltCompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltCompose"}
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt"}
 hiltCompiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt"}
+#Serialization
+serializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationJson"}
+serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "serialization"}
+#Stdlib
+stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "stdlib" }
 #HiltGradlePlugin
 hiltGradlePlugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt"}
 [plugins]
