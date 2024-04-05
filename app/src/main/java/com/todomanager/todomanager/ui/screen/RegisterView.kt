@@ -84,8 +84,8 @@ class RegisterView {
 
         val focusRequester = remember { FocusRequester() }
         val focusManager = LocalFocusManager.current
-        var nameTextLength by rememberSaveable { mutableIntStateOf(0) }
         var name by rememberSaveable { mutableStateOf("") }
+        var nameLength by rememberSaveable { mutableIntStateOf(0) }
         val keyboardController = LocalSoftwareKeyboardController.current
         var isDatePickerDialogVisible by remember { mutableStateOf(false) }
         var date by rememberSaveable { mutableStateOf("") }
@@ -94,8 +94,8 @@ class RegisterView {
         var profileUri: String? by rememberSaveable { mutableStateOf("") }
         profileUri = navController.currentBackStackEntry?.arguments?.getString(PROFILE_IMAGE_KEY)
 
-        LaunchedEffect(nameTextLength, date) {
-            isRegisterEnable = nameTextLength > 0 && date.isNotEmpty()
+        LaunchedEffect(nameLength, date) {
+            isRegisterEnable = nameLength > 0 && date.isNotEmpty()
         }
         Surface(modifier = Modifier
             .fillMaxSize()
@@ -114,13 +114,14 @@ class RegisterView {
                     focusRequester = focusRequester,
                     focusManager = focusManager
                 ) { text ->
-                    nameTextLength = text.length
+                    name = text
+                    nameLength = text.length
                 }
                 Text(
                     modifier = Modifier
                         .align(Alignment.End)
                         .padding(top = 5.dp, end = 40.dp),
-                    text = "$nameTextLength / $INPUT_NAME_MAX_LENGTH",
+                    text = "$nameLength / $INPUT_NAME_MAX_LENGTH",
                     style = Typography.displaySmall,
                     color = B1
                 )
