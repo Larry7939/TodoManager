@@ -1,5 +1,7 @@
 package com.todomanager.todomanager.ui.screen
 
+import android.Manifest
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,26 +29,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
 import com.todomanager.todomanager.R
+import com.todomanager.todomanager.constant.ArgumentKey.PROFILE_IMAGE_KEY
+import com.todomanager.todomanager.constant.Destination.CAMERA
 import com.todomanager.todomanager.ui.button.CtaButton
-import com.todomanager.todomanager.ui.textfield.InputTextField
 import com.todomanager.todomanager.ui.dialog.PickerDialog
+import com.todomanager.todomanager.ui.textfield.InputTextField
 import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.Typography
-import com.todomanager.todomanager.util.devTimberLog
 import com.todomanager.todomanager.util.Utils.requestPermission
 
 
 class RegisterView {
 
     @Composable
-    fun RegisterScreen() {
+    fun RegisterScreen(navController: NavHostController) {
         val focusRequester = remember { FocusRequester() }
         val focusManager = LocalFocusManager.current
         var nameTextLength by remember { mutableIntStateOf(0) }
@@ -54,6 +64,10 @@ class RegisterView {
         var isDatePickerDialogVisible by remember { mutableStateOf(false) }
         var date by remember { mutableStateOf("") }
         var isRegisterEnable by remember { mutableStateOf(false) }
+
+        var profileUri: String? by remember { mutableStateOf("") }
+        profileUri = navController.currentBackStackEntry?.arguments?.getString(PROFILE_IMAGE_KEY)
+
         LaunchedEffect(nameTextLength, date) {
             isRegisterEnable = nameTextLength > 0 && date.isNotEmpty()
         }
@@ -64,10 +78,9 @@ class RegisterView {
                 interactionSource = remember { MutableInteractionSource() }
             ) { removeInputNameFocus(keyboardController, focusManager) }) {
             Column(
-                modifier = Modifier.padding(top = 85.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                ProfileImage()
+                ProfileImage(LocalContext.current, profileUri) { navController.navigate(CAMERA) }
                 Spacer(modifier = Modifier.height(80.dp))
                 InputTextField().CustomOutlinedTextField(
                     hint = stringResource(id = R.string.input_name),
@@ -114,21 +127,24 @@ class RegisterView {
     }
 
     @Composable
-    fun ProfileImage(context: Context, uri: String, onClick: () -> Unit) {
-        val painter = if (uri.isNotEmpty()) {
-            rememberAsyncImagePainter(uri)
-        } else {
+    fun ProfileImage(context: Context, uri: String?, onClick: () -> Unit) {
+        val painter = if (uri.isNullOrEmpty()) {
             painterResource(id = R.drawable.ic_photo_profile)
+        } else {
+            rememberAsyncImagePainter(uri)
         }
 
-        val modifier = if (uri.isNotEmpty()) {
-            Modifier.fillMaxSize().graphicsLayer {
-                scaleX = -1f
-            }
+        val modifier = if (uri.isNullOrEmpty()) {
+            Modifier
         } else {
             Modifier
+                .fillMaxSize()
+                .graphicsLayer {
+                    scaleX = -1f
+                }
         }
 
+        Spacer(modifier = Modifier.height(85.dp))
         Box(
             modifier = Modifier
                 .wrapContentSize()
@@ -144,6 +160,7 @@ class RegisterView {
             Image(
                 modifier = modifier.align(Alignment.Center),
                 painter = painter,
+                colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) }),
                 contentScale = ContentScale.Crop,
                 contentDescription = "photo_profile"
             )
