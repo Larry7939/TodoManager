@@ -15,3 +15,11 @@ inline fun devTimberLog(crossinline block: () -> String) {
         Timber.d(block())
     }
 }
+
+fun devErrorLog(message: String) = Timber.tag(buildTag()).e(message)
+
+private fun buildTag(): String =
+    Thread.currentThread().stackTrace[4].let { ste ->
+        "${ste.fileName}:${ste.lineNumber}#${ste.methodName}"
+    }
+
