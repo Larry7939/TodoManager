@@ -68,6 +68,7 @@ class RegisterView {
     fun AddObserver(navController: NavHostController, registerViewModel: RegisterViewModel) {
         val setProfileState by registerViewModel.setProfileState.collectAsState()
         if (setProfileState == SUCCESS) {
+            navController.navigate(Destination.REGISTER_COMPLETE)
 
         } else if (setProfileState == FAILURE) {
             LocalContext.current.showToast(stringResource(id = R.string.register_failure))

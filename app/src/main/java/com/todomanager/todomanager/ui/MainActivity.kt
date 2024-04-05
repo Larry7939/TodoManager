@@ -13,6 +13,7 @@ import androidx.navigation.navArgument
 import com.todomanager.todomanager.constant.NavArgKey.PROFILE_IMAGE_KEY
 import com.todomanager.todomanager.constant.Destination
 import com.todomanager.todomanager.ui.screen.CameraView
+import com.todomanager.todomanager.ui.screen.RegisterCompleteView
 import com.todomanager.todomanager.ui.screen.RegisterView
 import com.todomanager.todomanager.ui.screen.SplashView
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
