@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -77,5 +79,7 @@ dependencies {
     implementation(libs.camera)
     implementation(libs.cameraLifecycle)
     implementation(libs.coil)
+    implementation(libs.hiltCompose)
     implementation(libs.hilt)
+    kapt(libs.hiltCompiler)
 }

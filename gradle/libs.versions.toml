@@ -16,7 +16,9 @@ lottie = "6.4.0"
 tedPermission = "3.3.0"
 camera = "1.4.0-alpha04"
 coil = "2.6.0"
-hilt = "1.2.0"
+hilt = "2.49"
+hiltCompose = "1.2.0"
+hiltPlugin = "2.44"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -52,9 +54,14 @@ cameraLifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "
 #Coil
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil"}
 #Hilt
-hilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt"}
-
+hiltCompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltCompose"}
+hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt"}
+hiltCompiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt"}
+#HiltGradlePlugin
+hiltGradlePlugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt"}
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+hiltPlugin = { id = "com.google.dagger.hilt.android", version.ref = "hiltPlugin" }
+
 
