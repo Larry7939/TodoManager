@@ -92,7 +92,11 @@ class RegisterView {
         var isRegisterEnable by remember { mutableStateOf(false) }
 
         var profileUri: String? by rememberSaveable { mutableStateOf("") }
-        profileUri = navController.currentBackStackEntry?.arguments?.getString(PROFILE_IMAGE_KEY)
+        val currentBackStackEntry by navController.currentBackStackEntryAsState()
+
+        if (currentBackStackEntry?.destination?.route == REGISTER_WITH_ARG) {
+            profileUri = navController.currentBackStackEntry?.arguments?.getString(PROFILE_IMAGE_KEY)
+        }
 
         LaunchedEffect(nameLength, date, profileUri) {
             isRegisterEnable = nameLength > 0 && date.isNotEmpty() && profileUri.isNullOrEmpty().not()
