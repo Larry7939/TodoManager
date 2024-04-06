@@ -55,7 +55,10 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                     composable(route = Destination.REGISTER_COMPLETE) {
-                        RegisterCompleteView().RegisterCompleteScreen()
+                        RegisterCompleteView().RegisterCompleteScreen(navController, registerViewModel)
+                    }
+                    composable(route = Destination.TASK_MAIN) {
+                        TaskMainView().TaskMainScreen(navController, registerViewModel)
                     }
                 }
             }

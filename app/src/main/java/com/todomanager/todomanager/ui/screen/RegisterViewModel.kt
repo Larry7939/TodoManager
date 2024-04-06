@@ -6,6 +6,7 @@ import com.todomanager.todomanager.constant.IOState
 import com.todomanager.todomanager.dto.Profile
 import com.todomanager.todomanager.repository.local.LocalRepository
 import com.todomanager.todomanager.util.devErrorLog
+import com.todomanager.todomanager.util.devTimberLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,8 +19,16 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(private val localRepositoryImpl: LocalRepository) :
     ViewModel() {
 
+    private var _profileState = MutableStateFlow<Profile>(Profile())
+    val profileState: StateFlow<Profile>
+        get() = _profileState
+
+    private var _getProfileState = MutableStateFlow<IOState>(IOState.IDLE)
+    val getProfileState: StateFlow<IOState>
+        get() = _getProfileState
+
     private var _setProfileState = MutableStateFlow<IOState>(IOState.IDLE)
-    val setProfileState:StateFlow<IOState>
+    val setProfileState: StateFlow<IOState>
         get() = _setProfileState
 
     private var _getRegisteredState = MutableStateFlow<IOState>(IOState.IDLE)
@@ -65,7 +74,27 @@ class RegisterViewModel @Inject constructor(private val localRepositoryImpl: Loc
             }
         }
     }
+
+    fun getProfile() {
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                updateGetProfileState(IOState.LOADING)
+                localRepositoryImpl.getProfile()
+            }.onSuccess { profile ->
+                _profileState.update { profile }
+                updateGetProfileState(IOState.SUCCESS)
+            }.onFailure {
+                devErrorLog("")
+                updateGetProfileState(IOState.FAILURE)
+            }
+        }
+    }
+
     fun updateSetProfileState(state: IOState) {
         _setProfileState.update { state }
+    }
+
+    private fun updateGetProfileState(state: IOState) {
+        _getProfileState.update { state }
     }
 }
