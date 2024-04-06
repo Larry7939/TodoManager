@@ -94,8 +94,8 @@ class RegisterView {
         var profileUri: String? by rememberSaveable { mutableStateOf("") }
         profileUri = navController.currentBackStackEntry?.arguments?.getString(PROFILE_IMAGE_KEY)
 
-        LaunchedEffect(nameLength, date) {
-            isRegisterEnable = nameLength > 0 && date.isNotEmpty()
+        LaunchedEffect(nameLength, date, profileUri) {
+            isRegisterEnable = nameLength > 0 && date.isNotEmpty() && profileUri.isNullOrEmpty().not()
         }
         Surface(modifier = Modifier
             .fillMaxSize()
