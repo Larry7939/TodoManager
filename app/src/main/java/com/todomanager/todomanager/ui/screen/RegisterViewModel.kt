@@ -15,11 +15,42 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(private val localRepositoryImpl: LocalRepository): ViewModel() {
+class RegisterViewModel @Inject constructor(private val localRepositoryImpl: LocalRepository) :
+    ViewModel() {
 
     private var _setProfileState = MutableStateFlow<IOState>(IOState.IDLE)
     val setProfileState:StateFlow<IOState>
         get() = _setProfileState
+
+    private var _getRegisteredState = MutableStateFlow<IOState>(IOState.IDLE)
+    val getRegisteredState: StateFlow<IOState>
+        get() = _getRegisteredState
+
+    private var _isRegisteredState = MutableStateFlow<Boolean>(false)
+    val isRegisteredState: StateFlow<Boolean>
+        get() = _isRegisteredState
+
+    fun setIsRegistered(isRegistered: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                localRepositoryImpl.setIsRegistered(isRegistered)
+            }.onSuccess {}.onFailure {}
+        }
+    }
+
+    fun getIsRegistered() {
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                localRepositoryImpl.getIsRegistered()
+            }.onSuccess { isRegistered ->
+                _isRegisteredState.update { isRegistered }
+                _getRegisteredState.update { IOState.SUCCESS }
+            }.onFailure {
+                devErrorLog("")
+                _getRegisteredState.update { IOState.FAILURE }
+            }
+        }
+    }
 
     fun setProfile(profile: Profile) {
         viewModelScope.launch(Dispatchers.IO) {

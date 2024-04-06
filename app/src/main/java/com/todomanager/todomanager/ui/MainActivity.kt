@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +16,9 @@ import com.todomanager.todomanager.constant.Destination
 import com.todomanager.todomanager.ui.screen.CameraView
 import com.todomanager.todomanager.ui.screen.RegisterCompleteView
 import com.todomanager.todomanager.ui.screen.RegisterView
+import com.todomanager.todomanager.ui.screen.RegisterViewModel
 import com.todomanager.todomanager.ui.screen.SplashView
+import com.todomanager.todomanager.ui.screen.TaskMainView
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,11 +27,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val registerViewModel: RegisterViewModel = hiltViewModel()
             val navController = rememberNavController()
             TodoManagerTheme {
                 NavHost(navController = navController, startDestination = Destination.SPLASH) {
+
                     composable(Destination.SPLASH) {
-                        SplashView().SplashScreen(navController)
+                        SplashView().SplashScreen(navController, registerViewModel)
                     }
                     composable(route = Destination.REGISTER_WITH_ARG,
                         arguments = listOf(
@@ -37,7 +42,7 @@ class MainActivity : ComponentActivity() {
                                 defaultValue = ""
                             }
                         )) {
-                        RegisterView().RegisterScreen(navController)
+                        RegisterView().RegisterScreen(navController, registerViewModel)
                     }
                     composable(route = Destination.CAMERA) {
                         CameraView().CameraScreen() { uri ->
