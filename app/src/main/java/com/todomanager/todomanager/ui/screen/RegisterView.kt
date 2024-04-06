@@ -42,12 +42,13 @@ import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.rememberAsyncImagePainter
 import com.todomanager.todomanager.R
 import com.todomanager.todomanager.constant.Destination
 import com.todomanager.todomanager.constant.Destination.CAMERA
+import com.todomanager.todomanager.constant.Destination.REGISTER_WITH_ARG
 import com.todomanager.todomanager.constant.IOState.FAILURE
 import com.todomanager.todomanager.constant.IOState.IDLE
 import com.todomanager.todomanager.constant.IOState.SUCCESS
@@ -60,7 +61,6 @@ import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.Typography
 import com.todomanager.todomanager.util.Utils.requestPermission
 import com.todomanager.todomanager.util.Utils.showToast
-import com.todomanager.todomanager.util.devTimberLog
 
 class RegisterView {
 
@@ -68,6 +68,7 @@ class RegisterView {
     fun AddObserver(navController: NavHostController, registerViewModel: RegisterViewModel) {
         val setProfileState by registerViewModel.setProfileState.collectAsState()
         if (setProfileState == SUCCESS) {
+            registerViewModel.setIsRegistered(true)
             navController.navigate(Destination.REGISTER_COMPLETE)
             registerViewModel.updateSetProfileState(IDLE)
 
@@ -78,8 +79,7 @@ class RegisterView {
     }
 
     @Composable
-    fun RegisterScreen(navController: NavHostController) {
-        val registerViewModel: RegisterViewModel = hiltViewModel()
+    fun RegisterScreen(navController: NavHostController, registerViewModel: RegisterViewModel) {
         AddObserver(navController, registerViewModel)
 
         val focusRequester = remember { FocusRequester() }
@@ -130,7 +130,7 @@ class RegisterView {
                     removeInputNameFocus(keyboardController, focusManager)
                     isDatePickerDialogVisible = true
                 }
-                Spacer(modifier = Modifier.height(190.dp))
+                Spacer(modifier = Modifier.weight(1f))
                 CtaButton().TextButton(
                     stringResource(id = R.string.cta_register),
                     isRegisterEnable
@@ -143,6 +143,7 @@ class RegisterView {
                         )
                     )
                 }
+                Spacer(modifier = Modifier.height(48.dp))
             }
             if (isDatePickerDialogVisible) {
                 PickerDialog().CustomDatePickerDialog(
@@ -183,7 +184,7 @@ class RegisterView {
         Box(
             modifier = Modifier
                 .wrapContentSize()
-                .size(150.dp)
+                .size(180.dp)
                 .clip(CircleShape)
                 .background(B1)
                 .clickable {
