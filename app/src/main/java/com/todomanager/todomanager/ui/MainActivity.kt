@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     composable(Destination.SPLASH) {
                         SplashView().SplashScreen(navController)
                     }
-                    composable(route = "${Destination.REGISTER}?$PROFILE_IMAGE_KEY={$PROFILE_IMAGE_KEY}",
+                    composable(route = Destination.REGISTER_WITH_ARG,
                         arguments = listOf(
                             navArgument(PROFILE_IMAGE_KEY) {
                                 type = NavType.StringType
