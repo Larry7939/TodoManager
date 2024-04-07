@@ -2,16 +2,13 @@ package com.todomanager.todomanager.util
 
 import android.content.Context
 import android.net.Uri
-import android.os.Environment
 import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.video.MediaStoreOutputOptions
 import androidx.camera.view.PreviewView
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.LifecycleOwner
@@ -25,8 +22,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -37,11 +32,12 @@ interface CameraX {
     fun takePicture(storagePath: String, getUri: (Uri) -> Unit)
     fun flipCameraFacing()
     fun unBindCamera()
-    fun getPreviewView() : PreviewView
-    fun getFacingState() : StateFlow<Int>
+    fun getPreviewView(): PreviewView
+    fun getFacingState(): StateFlow<Int>
 
 }
-class CameraXImpl: CameraX {
+
+class CameraXImpl : CameraX {
 
     private val _facing = MutableStateFlow(CameraSelector.LENS_FACING_FRONT)
 
@@ -51,12 +47,13 @@ class CameraXImpl: CameraX {
     private lateinit var provider: ProcessCameraProvider
     private lateinit var camera: Camera
     private lateinit var context: Context
-    private lateinit var executor : ExecutorService
-    private lateinit var imageCapture : ImageCapture
+    private lateinit var executor: ExecutorService
+    private lateinit var imageCapture: ImageCapture
 
     override fun initialize(context: Context) {
         previewView = PreviewView(context)
-        preview = Preview.Builder().build().also { it.setSurfaceProvider(previewView.surfaceProvider) }
+        preview =
+            Preview.Builder().build().also { it.setSurfaceProvider(previewView.surfaceProvider) }
         cameraProvider = ProcessCameraProvider.getInstance(context)
         provider = cameraProvider.get()
         imageCapture = ImageCapture.Builder().build()
@@ -78,7 +75,7 @@ class CameraXImpl: CameraX {
                     imageCapture
                 )
             }
-        },executor)
+        }, executor)
     }
 
     override fun takePicture(

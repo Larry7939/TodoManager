@@ -90,7 +90,13 @@ class TaskAddView {
                     stringResource(id = R.string.cta_add),
                     isAddTaskEnable
                 ) {
-                    taskViewModel.addTask(Task(id = Utils.createTaskId(), name = task, taskDate = taskDate)) {
+                    taskViewModel.addTask(
+                        Task(
+                            id = Utils.createTaskId(),
+                            name = task,
+                            taskDate = taskDate
+                        )
+                    ) {
                         navigateToTaskMain(navController)
                     }
                 }

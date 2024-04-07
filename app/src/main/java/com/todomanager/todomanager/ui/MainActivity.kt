@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
@@ -25,7 +24,6 @@ import com.todomanager.todomanager.ui.screen.TaskEditView
 import com.todomanager.todomanager.ui.screen.TaskMainView
 import com.todomanager.todomanager.ui.screen.TaskViewModel
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
-import com.todomanager.todomanager.util.devTimberLog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

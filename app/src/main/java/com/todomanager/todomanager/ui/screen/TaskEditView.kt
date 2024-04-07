@@ -83,7 +83,7 @@ class TaskEditView {
                 Spacer(modifier = Modifier.height(30.dp))
                 InputTextField().CustomOutlinedTextField(
                     hint = stringResource(id = R.string.input_task),
-                    text = taskName?:"",
+                    text = taskName ?: "",
                     focusRequester = focusRequester,
                     focusManager = focusManager
                 )
@@ -93,7 +93,7 @@ class TaskEditView {
                 Spacer(modifier = Modifier.height(25.dp))
                 InputTextField().TaskDateTextField(
                     hint = stringResource(id = R.string.input_date),
-                    taskDate = taskDate?: TaskDate("","","")
+                    taskDate = taskDate ?: TaskDate("", "", "")
                 ) {
                     removeInputNameFocus(keyboardController, focusManager)
                     isDatePickerDialogVisible = true

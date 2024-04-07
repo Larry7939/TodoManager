@@ -21,17 +21,15 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.navigation.NavController
 import com.todomanager.todomanager.R
 import com.todomanager.todomanager.ui.theme.Typography
 import com.todomanager.todomanager.util.CameraXFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.File
 
 class CameraView {
     @Composable
-    fun CameraScreen(getUri: (Uri)->Unit) {
+    fun CameraScreen(getUri: (Uri) -> Unit) {
         val storagePath = LocalContext.current.filesDir.absolutePath
         val lifecycleOwner = LocalLifecycleOwner.current
         val cameraScope = rememberCoroutineScope()
@@ -52,17 +50,21 @@ class CameraView {
             }
         }
         Box(Modifier.fillMaxSize()) {
-            previewView.value?.let { preview -> AndroidView(modifier = Modifier.fillMaxSize(), factory = { preview }) {} }
-                Button(
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .align(Alignment.BottomCenter),
-                    onClick = {
-                        cameraX.takePicture(storagePath, getUri)
-                    }
-                ) {
-                    Text(stringResource(id = R.string.take_picture), style = Typography.displayMedium)
+            previewView.value?.let { preview ->
+                AndroidView(
+                    modifier = Modifier.fillMaxSize(),
+                    factory = { preview }) {}
+            }
+            Button(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .align(Alignment.BottomCenter),
+                onClick = {
+                    cameraX.takePicture(storagePath, getUri)
                 }
+            ) {
+                Text(stringResource(id = R.string.take_picture), style = Typography.displayMedium)
+            }
         }
     }
 }

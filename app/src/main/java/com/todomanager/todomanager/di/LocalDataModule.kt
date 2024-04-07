@@ -4,7 +4,6 @@ import android.content.Context
 import com.todomanager.todomanager.datasource.LocalDataSource
 import com.todomanager.todomanager.repository.local.LocalRepository
 import com.todomanager.todomanager.repository.local.LocalRepositoryImpl
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,11 +19,13 @@ object LocalDataModule {
 
     @Singleton
     @Provides
-    fun provideLocalDataSource(@ApplicationContext context: Context, json: Json): LocalDataSource = LocalDataSource.getInstance(context, json)
+    fun provideLocalDataSource(@ApplicationContext context: Context, json: Json): LocalDataSource =
+        LocalDataSource.getInstance(context, json)
 
     @Singleton
     @Provides
-    fun bindLocalRepository(localRepositoryImpl: LocalRepositoryImpl): LocalRepository = localRepositoryImpl
+    fun bindLocalRepository(localRepositoryImpl: LocalRepositoryImpl): LocalRepository =
+        localRepositoryImpl
 
     @OptIn(ExperimentalSerializationApi::class)
     @Provides

@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.todomanager.todomanager.dto.Task
 import com.todomanager.todomanager.repository.local.LocalRepository
 import com.todomanager.todomanager.util.devErrorLog
-import com.todomanager.todomanager.util.devTimberLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,7 +45,7 @@ class TaskViewModel @Inject constructor(private val localRepositoryImpl: LocalRe
                 localRepositoryImpl.addTask(task)
             }.onSuccess {
                 loadTaskList()
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     onSuccess()
                 }
             }.onFailure { devErrorLog() }
@@ -59,7 +58,7 @@ class TaskViewModel @Inject constructor(private val localRepositoryImpl: LocalRe
                 localRepositoryImpl.editTask(task)
             }.onSuccess {
                 loadTaskList()
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     onSuccess()
                 }
             }.onFailure { devErrorLog() }

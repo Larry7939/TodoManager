@@ -6,7 +6,6 @@ import com.todomanager.todomanager.constant.IOState
 import com.todomanager.todomanager.dto.Profile
 import com.todomanager.todomanager.repository.local.LocalRepository
 import com.todomanager.todomanager.util.devErrorLog
-import com.todomanager.todomanager.util.devTimberLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

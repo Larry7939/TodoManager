@@ -1,7 +1,6 @@
 package com.todomanager.todomanager
 
 import android.app.Application
-import com.todomanager.todomanager.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 

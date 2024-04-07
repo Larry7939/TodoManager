@@ -28,9 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.todomanager.todomanager.R
-import com.todomanager.todomanager.constant.Destination
-import com.todomanager.todomanager.constant.Destination.REGISTER
-import com.todomanager.todomanager.constant.Destination.REGISTER_COMPLETE
 import com.todomanager.todomanager.constant.Destination.TASK_MAIN
 import com.todomanager.todomanager.ui.button.CtaButton
 import com.todomanager.todomanager.ui.theme.G2

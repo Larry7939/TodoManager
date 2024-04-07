@@ -5,7 +5,8 @@ import com.todomanager.todomanager.dto.Profile
 import com.todomanager.todomanager.dto.Task
 import javax.inject.Inject
 
-class LocalRepositoryImpl @Inject constructor(private val localDataSource: LocalDataSource): LocalRepository {
+class LocalRepositoryImpl @Inject constructor(private val localDataSource: LocalDataSource) :
+    LocalRepository {
     override fun getTask(taskId: String?): Task? {
         return localDataSource.getTask(taskId)
     }

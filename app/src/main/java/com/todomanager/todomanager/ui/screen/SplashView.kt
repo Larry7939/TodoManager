@@ -32,7 +32,6 @@ import com.todomanager.todomanager.constant.IOState
 import com.todomanager.todomanager.ui.theme.O1
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
 import com.todomanager.todomanager.ui.theme.Typography
-import com.todomanager.todomanager.util.devTimberLog
 import kotlinx.coroutines.delay
 
 class SplashView {

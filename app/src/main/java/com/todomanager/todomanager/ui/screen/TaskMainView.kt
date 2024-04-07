@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -122,7 +121,8 @@ class TaskMainView {
             FloatingButton(
                 Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(bottom = 45.dp, end = 20.dp)) {
+                    .padding(bottom = 45.dp, end = 20.dp)
+            ) {
                 navController.navigate(TASK_ADD)
             }
         }

@@ -93,11 +93,13 @@ class RegisterView {
         val currentBackStackEntry by navController.currentBackStackEntryAsState()
 
         if (currentBackStackEntry?.destination?.route == REGISTER_WITH_ARG) {
-            profileUri = navController.currentBackStackEntry?.arguments?.getString(PROFILE_IMAGE_KEY)
+            profileUri =
+                navController.currentBackStackEntry?.arguments?.getString(PROFILE_IMAGE_KEY)
         }
 
         LaunchedEffect(nameLength, date, profileUri) {
-            isRegisterEnable = nameLength > 0 && date.isNotEmpty() && profileUri.isNullOrEmpty().not()
+            isRegisterEnable =
+                nameLength > 0 && date.isNotEmpty() && profileUri.isNullOrEmpty().not()
         }
         Surface(modifier = Modifier
             .fillMaxSize()
@@ -129,7 +131,10 @@ class RegisterView {
                     color = B1
                 )
                 Spacer(modifier = Modifier.height(15.dp))
-                InputTextField().DateTextField(stringResource(id = R.string.input_Birthday), date = date) {
+                InputTextField().DateTextField(
+                    stringResource(id = R.string.input_Birthday),
+                    date = date
+                ) {
                     removeInputNameFocus(keyboardController, focusManager)
                     isDatePickerDialogVisible = true
                 }
