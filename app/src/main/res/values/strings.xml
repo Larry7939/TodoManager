@@ -6,6 +6,14 @@
     <string name="cancel">Cancel</string>
     <string name="cta_register">Register</string>
     <string name="cta_start">Start</string>
+    <string name="cta_add">ADD</string>
+    <string name="cta_edit">EDIT</string>
     <string name="take_picture">"사진 촬영"</string>
     <string name="register_failure">알 수 없는 에러로 인해 등록에 실패했어요.</string>
+    <string name="empty_todo">\'+\' 버튼을 클릭하여\n새로운 TODO를 추가해보세요!</string>
+    <string name="input_task">Task</string>
+    <string name="input_date">Date</string>
+    <string name="todo_list">TODO LIST</string>
+    <string name="add_task">ADD TASK</string>
+    <string name="edit_task">EDIT TASK</string>
 </resources>
