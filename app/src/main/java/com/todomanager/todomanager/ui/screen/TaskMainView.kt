@@ -112,6 +112,12 @@ class TaskMainView {
                 TaskList(
                     taskList
                 ) { index, direction ->
+                    if (direction == TODO_COMPLETE) {
+                        taskViewModel.removeTask(taskList[index].id)
+                    } else if (direction == TODO_EDIT) {
+                        navController.navigate("$TASK_EDIT?${NavArgKey.TASK_ID_EDIT_KEY}=${taskList[index].id}")
+                    }
+                }
         }
     }
 
@@ -228,4 +234,8 @@ class TaskMainView {
         }
     }
 
+    companion object {
+        const val TODO_COMPLETE = "todo_complete"
+        const val TODO_EDIT = "todo_edit"
+    }
 }
