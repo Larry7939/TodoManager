@@ -13,6 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.todomanager.todomanager.R
@@ -28,13 +30,28 @@ class PickerDialog {
     fun CustomDatePickerDialog(
         pattern: String,
         isFutureSelectable: Boolean,
+        isPastSelectable: Boolean,
         onDateSelected: (String) -> Unit,
         onDismiss: () -> Unit
     ) {
-        val datePickerState = if (!isFutureSelectable) {
+        val datePickerState = if (!isFutureSelectable && isPastSelectable) {
             val selectableDates = object : SelectableDates {
                 override fun isSelectableDate(utcTimeMillis: Long): Boolean {
                     return utcTimeMillis <= System.currentTimeMillis()
+                }
+            }
+            rememberDatePickerState(selectableDates = selectableDates)
+        } else if (isFutureSelectable && !isPastSelectable) {
+            val selectableDates = object : SelectableDates {
+                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                    return utcTimeMillis >= System.currentTimeMillis()
+                }
+            }
+            rememberDatePickerState(selectableDates = selectableDates)
+        } else if (!isFutureSelectable && !isPastSelectable) {
+            val selectableDates = object : SelectableDates {
+                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                    return utcTimeMillis == System.currentTimeMillis()
                 }
             }
             rememberDatePickerState(selectableDates = selectableDates)

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -71,7 +70,6 @@ class RegisterView {
             registerViewModel.setIsRegistered(true)
             navController.navigate(Destination.REGISTER_COMPLETE)
             registerViewModel.updateSetProfileState(IDLE)
-
         } else if (setProfileState == FAILURE) {
             LocalContext.current.showToast(stringResource(id = R.string.register_failure))
             registerViewModel.updateSetProfileState(IDLE)
@@ -113,6 +111,7 @@ class RegisterView {
                 ProfileImage(LocalContext.current, profileUri) { navController.navigate(CAMERA) }
                 Spacer(modifier = Modifier.height(80.dp))
                 InputTextField().CustomOutlinedTextField(
+                    text = name,
                     hint = stringResource(id = R.string.input_name),
                     maxLength = INPUT_NAME_MAX_LENGTH,
                     focusRequester = focusRequester,
@@ -130,7 +129,7 @@ class RegisterView {
                     color = B1
                 )
                 Spacer(modifier = Modifier.height(15.dp))
-                InputTextField().DateTextField(date) {
+                InputTextField().DateTextField(stringResource(id = R.string.input_Birthday), date = date) {
                     removeInputNameFocus(keyboardController, focusManager)
                     isDatePickerDialogVisible = true
                 }
@@ -151,7 +150,9 @@ class RegisterView {
             }
             if (isDatePickerDialogVisible) {
                 PickerDialog().CustomDatePickerDialog(
+                    pattern = "yyyy.MM.dd",
                     isFutureSelectable = false,
+                    isPastSelectable = true,
                     onDateSelected = { date = it },
                     onDismiss = { isDatePickerDialogVisible = false })
             }
@@ -187,7 +188,6 @@ class RegisterView {
         Spacer(modifier = Modifier.height(85.dp))
         Box(
             modifier = Modifier
-                .wrapContentSize()
                 .size(180.dp)
                 .clip(CircleShape)
                 .background(B1)
