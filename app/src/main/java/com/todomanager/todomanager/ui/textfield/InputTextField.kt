@@ -99,8 +99,8 @@ class InputTextField {
     }
 
     @Composable
-    fun DateTextField(date: String, onClick: () -> Unit) {
-        val text = date.ifEmpty { stringResource(id = R.string.input_Birthday) }
+    fun DateTextField(hint: String, date: String, onClick: () -> Unit) {
+        val text = date.ifEmpty { hint }
         val textColor = if (date.isEmpty()) G5 else Color.Black
 
         Box(
