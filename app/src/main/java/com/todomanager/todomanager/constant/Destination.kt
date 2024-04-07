@@ -7,4 +7,6 @@ object Destination {
     const val CAMERA = "camera_screen"
     const val REGISTER_COMPLETE = "register_complete_screen"
     const val TASK_MAIN = "task_main_screen"
+    const val TASK_ADD = "task_add_screen"
+    const val TASK_EDIT = "task_edit_screen"
 }
