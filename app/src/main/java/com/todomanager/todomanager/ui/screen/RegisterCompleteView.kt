@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -38,7 +39,9 @@ class RegisterCompleteView {
         navController: NavHostController,
         registerViewModel: RegisterViewModel
     ) {
-        registerViewModel.getProfile()
+        LaunchedEffect(Unit) {
+            registerViewModel.getProfile()
+        }
         val profile by registerViewModel.profileState.collectAsState()
 
         Surface(modifier = Modifier.fillMaxSize()) {
