@@ -248,7 +248,7 @@ class TaskMainView {
                     Text(
                         modifier = Modifier
                             .padding(start = 15.dp)
-                            .weight(2f),
+                            .weight(1.5f),
                         text = todo.name,
                         style = Typography.displayLarge,
                         color = G2,
@@ -264,7 +264,6 @@ class TaskMainView {
                             }
                         }
                     )
-                    Spacer(modifier = Modifier.width(5.dp))
                     Text(
                         modifier = Modifier
                             .padding(end = 15.dp)
