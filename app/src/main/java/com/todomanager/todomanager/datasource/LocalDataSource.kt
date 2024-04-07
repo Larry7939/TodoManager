@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.todomanager.todomanager.dto.Profile
+import com.todomanager.todomanager.dto.Task
 import com.todomanager.todomanager.util.devErrorLog
-import com.todomanager.todomanager.util.devTimberLog
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
@@ -15,6 +15,7 @@ import kotlinx.serialization.json.Json
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(ExperimentalSerializationApi::class)
 @Singleton
 class LocalDataSource @Inject constructor(
     @ApplicationContext context: Context,
@@ -24,20 +25,61 @@ class LocalDataSource @Inject constructor(
         context.getSharedPreferences(LOCAL_PREFS_NAME, Context.MODE_PRIVATE)
     }
 
-//    val profile: Profile
-//        set(value) = prefs.edit {
-//        }
+    fun getTask(taskId: String?): Task? {
+        if (taskId == null) {
+            return null
+        }
+        val jsonTask = prefs.getString(KEY_TASK, null) ?: emptyList<Task>().toString()
+        return json.decodeFromString<List<Task>>(jsonTask).find { it.id == taskId }
+    }
 
-    @OptIn(ExperimentalSerializationApi::class)
+    fun addTask(task: Task?) {
+        val jsonTask = prefs.getString(KEY_TASK, null) ?: emptyList<Task>().toString()
+        val taskList = json.decodeFromString<MutableList<Task>>(jsonTask)
+        if (task != null) {
+            taskList.add(task)
+        }
+        prefs.edit { putString(KEY_TASK, json.encodeToString(taskList)) }
+    }
+
+    fun editTask(task: Task?) {
+        removeTask(task?.id)
+        addTask(task)
+    }
+
+    fun removeTask(taskId: String?) {
+        val jsonTask = prefs.getString(KEY_TASK, null) ?: emptyList<Task>().toString()
+        val taskList = json.decodeFromString<MutableList<Task>>(jsonTask)
+        val task = taskList.find { it.id == taskId }
+        taskList.remove(task)
+        prefs.edit { putString(KEY_TASK, json.encodeToString(taskList)) }
+    }
+
+    fun getTaskList(): List<Task> {
+        val jsonTodo = prefs.getString(KEY_TASK, null) ?: emptyList<Task>().toString()
+        return try {
+            json.decodeFromString<List<Task>>(jsonTodo)
+        } catch (e: SerializationException) {
+            e.message?.let {
+                devErrorLog(it)
+            }
+            emptyList<Task>()
+        } catch (e: IllegalArgumentException) {
+            e.message?.let {
+                devErrorLog(it)
+            }
+            emptyList<Task>()
+        }
+    }
+
     fun setProfile(profile: Profile) {
         return prefs.edit {
             putString(KEY_PROFILE, json.encodeToString(profile))
         }
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     fun getProfile(): Profile {
-        val jsonProfile = prefs.getString(KEY_PROFILE, null)?: return Profile()
+        val jsonProfile = prefs.getString(KEY_PROFILE, null) ?: return Profile()
         return try {
             json.decodeFromString<Profile>(jsonProfile)
         } catch (e: SerializationException) {
@@ -64,7 +106,9 @@ class LocalDataSource @Inject constructor(
     companion object {
         private const val LOCAL_PREFS_NAME = "local_prefs"
         private const val KEY_PROFILE = "profile"
+        private const val KEY_TASK = "task"
         private const val KEY_IS_REGISTERED = "is_registered"
+
         @Volatile
         private var instance: LocalDataSource? = null
         fun getInstance(context: Context, json: Json): LocalDataSource {
