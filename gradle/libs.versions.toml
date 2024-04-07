@@ -22,6 +22,7 @@ hiltPlugin = "2.44"
 serializationJson = "1.2.1"
 serialization = "1.9.0"
 stdlib = "1.9.22"
+composeMaterial = "1.3.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -67,6 +68,7 @@ serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.
 stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "stdlib" }
 #HiltGradlePlugin
 hiltGradlePlugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt"}
+androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
