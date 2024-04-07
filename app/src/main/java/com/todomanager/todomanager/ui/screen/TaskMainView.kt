@@ -148,6 +148,26 @@ class TaskMainView {
     }
 
     @Composable
+    fun EmptyTask(modifier: Modifier) {
+        Column(modifier = modifier) {
+            Image(
+                modifier = Modifier
+                    .size(160.dp)
+                    .align(Alignment.CenterHorizontally),
+                painter = painterResource(id = R.drawable.ic_empty_box),
+                contentDescription = ""
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = stringResource(id = R.string.empty_todo),
+                textAlign = TextAlign.Center,
+                style = Typography.headlineSmall,
+                color = G4
+            )
+        }
+    }
+
+    @Composable
     fun TaskList(todoList: List<Task>, onSwiped: (Int, String) -> Unit) {
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             items(todoList.size) { index ->
