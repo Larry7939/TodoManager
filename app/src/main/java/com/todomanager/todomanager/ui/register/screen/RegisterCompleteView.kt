@@ -1,4 +1,4 @@
-package com.todomanager.todomanager.ui.screen
+package com.todomanager.todomanager.ui.register.screen
 
 
 import androidx.compose.foundation.Image
@@ -30,10 +30,15 @@ import coil.compose.rememberAsyncImagePainter
 import com.todomanager.todomanager.R
 import com.todomanager.todomanager.constant.Destination.TASK_MAIN
 import com.todomanager.todomanager.ui.button.CtaButton
+import com.todomanager.todomanager.ui.screen.RegisterViewModel
 import com.todomanager.todomanager.ui.theme.G2
 import com.todomanager.todomanager.ui.theme.Typography
 
 class RegisterCompleteView {
+
+    /**
+     * 사용자 등록 완료 뷰
+     * */
     @Composable
     fun RegisterCompleteScreen(
         navController: NavHostController,
@@ -78,6 +83,7 @@ class RegisterCompleteView {
                     isActivated = true,
                     text = stringResource(id = R.string.cta_start)
                 ) {
+                    // Task Main 뷰 navigate 및 backStackEntry clear
                     navController.navigate(TASK_MAIN) {
                         popUpTo(navController.graph.id)
                     }

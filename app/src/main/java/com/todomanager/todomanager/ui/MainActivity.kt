@@ -15,14 +15,14 @@ import com.todomanager.todomanager.constant.Destination
 import com.todomanager.todomanager.constant.NavArgKey.PROFILE_IMAGE_KEY
 import com.todomanager.todomanager.constant.NavArgKey.TASK_ID_EDIT_KEY
 import com.todomanager.todomanager.ui.screen.CameraView
-import com.todomanager.todomanager.ui.screen.RegisterCompleteView
-import com.todomanager.todomanager.ui.screen.RegisterView
+import com.todomanager.todomanager.ui.register.screen.RegisterCompleteView
+import com.todomanager.todomanager.ui.register.screen.RegisterView
 import com.todomanager.todomanager.ui.screen.RegisterViewModel
 import com.todomanager.todomanager.ui.screen.SplashView
-import com.todomanager.todomanager.ui.screen.TaskAddView
-import com.todomanager.todomanager.ui.screen.TaskEditView
-import com.todomanager.todomanager.ui.screen.TaskMainView
-import com.todomanager.todomanager.ui.screen.TaskViewModel
+import com.todomanager.todomanager.ui.task.screen.TaskAddView
+import com.todomanager.todomanager.ui.task.screen.TaskEditView
+import com.todomanager.todomanager.ui.task.screen.TaskMainView
+import com.todomanager.todomanager.ui.task.TaskViewModel
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,6 +49,7 @@ class MainActivity : ComponentActivity() {
                         RegisterView().RegisterScreen(navController, registerViewModel)
                     }
                     composable(route = Destination.CAMERA) {
+                        // 카메라 촬영 후 사용자 등록 뷰에 uri 전달
                         CameraView().CameraScreen() { uri ->
                             navController.navigate("${Destination.REGISTER}?$PROFILE_IMAGE_KEY=$uri") {
                                 launchSingleTop = true

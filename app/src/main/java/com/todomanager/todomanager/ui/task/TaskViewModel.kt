@@ -1,8 +1,8 @@
-package com.todomanager.todomanager.ui.screen
+package com.todomanager.todomanager.ui.task
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.todomanager.todomanager.dto.Task
+import com.todomanager.todomanager.model.Task
 import com.todomanager.todomanager.repository.local.LocalRepository
 import com.todomanager.todomanager.util.devErrorLog
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +28,9 @@ class TaskViewModel @Inject constructor(private val localRepositoryImpl: LocalRe
     val taskListState: StateFlow<List<Task>>
         get() = _taskListState
 
+    /**
+     * 로컬에 저장된 Task 로드
+     * */
     fun getTask(taskId: String?) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
@@ -38,7 +41,9 @@ class TaskViewModel @Inject constructor(private val localRepositoryImpl: LocalRe
         }
     }
 
-
+    /**
+     * Task 로컬 저장
+     * */
     fun addTask(task: Task, onSuccess: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
@@ -52,6 +57,9 @@ class TaskViewModel @Inject constructor(private val localRepositoryImpl: LocalRe
         }
     }
 
+    /**
+     * 로컬에 저장된 Task 수정
+     * */
     fun editTask(task: Task?, onSuccess: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
@@ -65,6 +73,9 @@ class TaskViewModel @Inject constructor(private val localRepositoryImpl: LocalRe
         }
     }
 
+    /**
+     * 로컬에 저장된 Task 삭제(완료)
+     * */
     fun removeTask(taskId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
@@ -75,6 +86,9 @@ class TaskViewModel @Inject constructor(private val localRepositoryImpl: LocalRe
         }
     }
 
+    /**
+     * 로컬에 저장된 TaskList 로드
+     * */
     fun loadTaskList() {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
@@ -85,6 +99,9 @@ class TaskViewModel @Inject constructor(private val localRepositoryImpl: LocalRe
         }
     }
 
+    /**
+     * 근시일 순으로 task 정렬 및 taskList 상태 업데이트
+     * */
     private fun sortTaskList(taskList: List<Task>): List<Task> {
         val parseDate: (String) -> LocalDateTime = {
             val formatter = DateTimeFormatter.ofPattern("yyyy MM/dd h:mm a", Locale.ENGLISH)

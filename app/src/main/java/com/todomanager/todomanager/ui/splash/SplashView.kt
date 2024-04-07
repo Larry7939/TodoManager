@@ -36,6 +36,9 @@ import kotlinx.coroutines.delay
 
 class SplashView {
 
+    /**
+     * 앱 진입 시, 사용자 등록 여부를 확인한 후, 사용자 등록 뷰 또는 TASK MAIN 뷰로 이동
+     * */
     @Composable
     fun AddObserver(navController: NavController, registerViewModel: RegisterViewModel) {
         val getIsRegistered by registerViewModel.getRegisteredState.collectAsState()
@@ -57,6 +60,9 @@ class SplashView {
         }
     }
 
+    /**
+     * 앱 진입 스플래시 뷰
+     * */
     @Composable
     fun SplashScreen(navController: NavController, registerViewModel: RegisterViewModel) {
         val composition by rememberLottieComposition(LottieCompositionSpec.Asset("splash.json"))

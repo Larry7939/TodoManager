@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 class CameraView {
     @Composable
     fun CameraScreen(getUri: (Uri) -> Unit) {
-        val storagePath = LocalContext.current.filesDir.absolutePath
+        val storagePath = LocalContext.current.filesDir.absolutePath // 앱 내부 저장소 경로
         val lifecycleOwner = LocalLifecycleOwner.current
         val cameraScope = rememberCoroutineScope()
         val context = LocalContext.current
@@ -38,15 +38,17 @@ class CameraView {
         val previewView = remember { mutableStateOf<PreviewView?>(null) }
         val facing = cameraX.getFacingState().collectAsState()
         LaunchedEffect(Unit) {
-            cameraX.initialize(context = context)
-            previewView.value = cameraX.getPreviewView()
-        }
-        DisposableEffect(facing.value) {
             cameraScope.launch(Dispatchers.Main) {
+                // 호출 순서 주의 - preview 이전에 initialize와 startCamera가 호출되어야 함.
+                cameraX.initialize(context = context)
                 cameraX.startCamera(lifecycleOwner = lifecycleOwner)
+                previewView.value = cameraX.getPreviewView()
             }
+        }
+        // Composable 소멸 시
+        DisposableEffect(facing.value) {
             onDispose {
-                cameraX.unBindCamera()
+                cameraX.unBindCamera() // 카메라 리소스 해제
             }
         }
         Box(Modifier.fillMaxSize()) {

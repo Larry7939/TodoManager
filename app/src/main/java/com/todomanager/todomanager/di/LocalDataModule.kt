@@ -1,7 +1,7 @@
 package com.todomanager.todomanager.di
 
 import android.content.Context
-import com.todomanager.todomanager.datasource.LocalDataSource
+import com.todomanager.todomanager.datasource.local.LocalDataSource
 import com.todomanager.todomanager.repository.local.LocalRepository
 import com.todomanager.todomanager.repository.local.LocalRepositoryImpl
 import dagger.Module

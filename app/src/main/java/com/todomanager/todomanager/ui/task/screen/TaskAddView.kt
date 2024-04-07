@@ -1,4 +1,4 @@
-package com.todomanager.todomanager.ui.screen
+package com.todomanager.todomanager.ui.task.screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -29,10 +29,11 @@ import androidx.navigation.NavController
 import com.todomanager.todomanager.R
 import com.todomanager.todomanager.constant.Destination.TASK_ADD
 import com.todomanager.todomanager.constant.Destination.TASK_MAIN
-import com.todomanager.todomanager.dto.Task
-import com.todomanager.todomanager.dto.TaskDate
+import com.todomanager.todomanager.model.Task
+import com.todomanager.todomanager.model.TaskDate
 import com.todomanager.todomanager.ui.button.CtaButton
 import com.todomanager.todomanager.ui.dialog.PickerDialog
+import com.todomanager.todomanager.ui.task.TaskViewModel
 import com.todomanager.todomanager.ui.textfield.InputTextField
 import com.todomanager.todomanager.ui.theme.G2
 import com.todomanager.todomanager.ui.theme.Typography
@@ -41,6 +42,7 @@ import com.todomanager.todomanager.util.Utils
 class TaskAddView {
     @Composable
     fun TaskAddScreen(navController: NavController, taskViewModel: TaskViewModel) {
+        // Task Name TextField Focus 상태 관리 변수
         val focusRequester = remember { FocusRequester() }
         val focusManager = LocalFocusManager.current
         val keyboardController = LocalSoftwareKeyboardController.current
@@ -50,7 +52,9 @@ class TaskAddView {
         var time by rememberSaveable { mutableStateOf("") }
         var isDatePickerDialogVisible by remember { mutableStateOf(false) }
         var isTimePickerDialogVisible by remember { mutableStateOf(false) }
-        var isAddTaskEnable by remember { mutableStateOf(false) }
+        var isAddTaskEnable by remember { mutableStateOf(false) } // Add CTA 버튼 enabled 상태
+
+        // Task명, Date가 모두 있어야 Task 추가 가능함.
         LaunchedEffect(taskLength, time) {
             isAddTaskEnable = taskLength > 0 && taskDate.isEmpty().not()
         }
@@ -92,12 +96,12 @@ class TaskAddView {
                 ) {
                     taskViewModel.addTask(
                         Task(
-                            id = Utils.createTaskId(),
+                            id = Utils.createTaskId(), // 랜덤 Task Id 부여
                             name = task,
                             taskDate = taskDate
                         )
                     ) {
-                        navigateToTaskMain(navController)
+                        navigateToTaskMain(navController) // addTask 성공 시, Task Main 뷰로 navigate
                     }
                 }
                 Spacer(modifier = Modifier.height(48.dp))
@@ -111,7 +115,7 @@ class TaskAddView {
                         if (it.isNotEmpty()) {
                             taskDate.year = it.split(",")[0]
                             taskDate.monthDate = it.split(",")[1]
-                            isTimePickerDialogVisible = true
+                            isTimePickerDialogVisible = true // DatePicker 날짜 선택 완료 시, TimePicker 노출
                         }
                     },
                     onDismiss = {
@@ -124,6 +128,7 @@ class TaskAddView {
                     taskDate.hourMinute = it
                     isTimePickerDialogVisible = false
                 }, onDismiss = {
+                    // Dismiss시, DatePicker에서 선택한 taskDate 초기화
                     taskDate = TaskDate()
                     time = ""
                     isTimePickerDialogVisible = false
@@ -141,6 +146,9 @@ class TaskAddView {
         }
     }
 
+    /**
+     * TextFiled 제외 다른 뷰 클릭 또는 키보드 완료 버튼 클릭 시 키보드 숨김 및 TextFieldFocus 해제
+     */
     private fun removeInputNameFocus(
         keyboardController: SoftwareKeyboardController?,
         focusManager: FocusManager

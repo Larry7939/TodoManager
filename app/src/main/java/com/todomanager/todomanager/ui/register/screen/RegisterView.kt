@@ -1,4 +1,4 @@
-package com.todomanager.todomanager.ui.screen
+package com.todomanager.todomanager.ui.register.screen
 
 import android.Manifest
 import android.content.Context
@@ -52,9 +52,10 @@ import com.todomanager.todomanager.constant.IOState.FAILURE
 import com.todomanager.todomanager.constant.IOState.IDLE
 import com.todomanager.todomanager.constant.IOState.SUCCESS
 import com.todomanager.todomanager.constant.NavArgKey.PROFILE_IMAGE_KEY
-import com.todomanager.todomanager.dto.Profile
+import com.todomanager.todomanager.model.Profile
 import com.todomanager.todomanager.ui.button.CtaButton
 import com.todomanager.todomanager.ui.dialog.PickerDialog
+import com.todomanager.todomanager.ui.screen.RegisterViewModel
 import com.todomanager.todomanager.ui.textfield.InputTextField
 import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.Typography
@@ -63,11 +64,17 @@ import com.todomanager.todomanager.util.Utils.showToast
 
 class RegisterView {
 
+    /**
+     * 등록 성공 혹은 실패 이벤트 수행
+     *  - 성공 시, 사용자 등록 완료 뷰로 navigate
+     *  - 실패 시, 토스트 메시지 노출
+     *  - 리컴포지션으로 인한 중복 호출 방지를 위해 setProfileState를 IDLE로 update
+     */
     @Composable
     fun AddObserver(navController: NavHostController, registerViewModel: RegisterViewModel) {
         val setProfileState by registerViewModel.setProfileState.collectAsState()
         if (setProfileState == SUCCESS) {
-            registerViewModel.setIsRegistered(true)
+            registerViewModel.setIsRegistered(true) // 등록 여부 플래그 값 로컬 저장
             navController.navigate(Destination.REGISTER_COMPLETE)
             registerViewModel.updateSetProfileState(IDLE)
         } else if (setProfileState == FAILURE) {
@@ -76,10 +83,14 @@ class RegisterView {
         }
     }
 
+    /**
+     * 사용자 등록 뷰 (앱 설치 후 최초 노출)
+     */
     @Composable
     fun RegisterScreen(navController: NavHostController, registerViewModel: RegisterViewModel) {
         AddObserver(navController, registerViewModel)
 
+        // Name TextField Focus 상태 관리 변수
         val focusRequester = remember { FocusRequester() }
         val focusManager = LocalFocusManager.current
         var name by rememberSaveable { mutableStateOf("") }
@@ -87,16 +98,18 @@ class RegisterView {
         val keyboardController = LocalSoftwareKeyboardController.current
         var isDatePickerDialogVisible by remember { mutableStateOf(false) }
         var date by rememberSaveable { mutableStateOf("") }
-        var isRegisterEnable by remember { mutableStateOf(false) }
+        var isRegisterEnable by remember { mutableStateOf(false) } // Register CTA 버튼 enabled 상태
 
         var profileUri: String? by rememberSaveable { mutableStateOf("") }
         val currentBackStackEntry by navController.currentBackStackEntryAsState()
 
+        // 카메라 뷰로부터 전달된 Argument로 프로필 이미지 Uri 로드
         if (currentBackStackEntry?.destination?.route == REGISTER_WITH_ARG) {
             profileUri =
                 navController.currentBackStackEntry?.arguments?.getString(PROFILE_IMAGE_KEY)
         }
 
+        // 이름, 생일, 프로필 사진이 모두 있어야 등록 가능함.
         LaunchedEffect(nameLength, date, profileUri) {
             isRegisterEnable =
                 nameLength > 0 && date.isNotEmpty() && profileUri.isNullOrEmpty().not()
@@ -164,6 +177,9 @@ class RegisterView {
         }
     }
 
+    /**
+     * TextFiled 제외 다른 뷰 클릭 또는 키보드 완료 버튼 클릭 시 키보드 숨김 및 TextFieldFocus 해제
+     */
     private fun removeInputNameFocus(
         keyboardController: SoftwareKeyboardController?,
         focusManager: FocusManager
@@ -172,6 +188,10 @@ class RegisterView {
         focusManager.clearFocus()
     }
 
+    /**
+     * 프로필 이미지 뷰
+     * 클릭 시 카메라 뷰로 navigate 동작
+     * */
     @Composable
     fun ProfileImage(context: Context, uri: String?, onClick: () -> Unit) {
         val painter = if (uri.isNullOrEmpty()) {
@@ -185,8 +205,9 @@ class RegisterView {
         } else {
             Modifier
                 .fillMaxSize()
+
                 .graphicsLayer {
-                    scaleX = -1f
+                    scaleX = -1f // 전면 카메라 촬영 이미지 좌우 반전
                 }
         }
 
@@ -205,7 +226,7 @@ class RegisterView {
             Image(
                 modifier = modifier.align(Alignment.Center),
                 painter = painter,
-                colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) }),
+                colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) }), // 프로필 이미지 흑백 처리
                 contentScale = ContentScale.Crop,
                 contentDescription = "photo_profile"
             )

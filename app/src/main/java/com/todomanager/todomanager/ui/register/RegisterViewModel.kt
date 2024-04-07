@@ -3,7 +3,7 @@ package com.todomanager.todomanager.ui.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.todomanager.todomanager.constant.IOState
-import com.todomanager.todomanager.dto.Profile
+import com.todomanager.todomanager.model.Profile
 import com.todomanager.todomanager.repository.local.LocalRepository
 import com.todomanager.todomanager.util.devErrorLog
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -60,6 +60,9 @@ class RegisterViewModel @Inject constructor(private val localRepositoryImpl: Loc
         }
     }
 
+    /**
+     * 프로필(이미지 uri, 이름, 생년월일) 로컬 저장 함수
+     * */
     fun setProfile(profile: Profile) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
@@ -74,6 +77,9 @@ class RegisterViewModel @Inject constructor(private val localRepositoryImpl: Loc
         }
     }
 
+    /**
+     * 로컬에 저장된 프로필(이미지 uri, 이름, 생년월일) 로드 함수
+     * */
     fun getProfile() {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {

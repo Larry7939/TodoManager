@@ -39,7 +39,7 @@ interface CameraX {
 
 class CameraXImpl : CameraX {
 
-    private val _facing = MutableStateFlow(CameraSelector.LENS_FACING_FRONT)
+    private val _facing = MutableStateFlow(CameraSelector.LENS_FACING_FRONT) // 전면 카메라 선택
 
     private lateinit var previewView: PreviewView
     private lateinit var preview: Preview
@@ -78,6 +78,12 @@ class CameraXImpl : CameraX {
         }, executor)
     }
 
+    /**
+     * 사진 촬영 함수
+     * - 사진 촬영 및 저장
+     * - getUri 콜백을 통해 uri(이미지가 저장된 앱 내부 경로) 반환
+     * - 이후 사용자 등록 뷰로 uri 전달 및 navigate
+     * */
     override fun takePicture(
         storagePath: String,
         getUri: (Uri) -> Unit
@@ -112,6 +118,9 @@ class CameraXImpl : CameraX {
         }
     }
 
+    /**
+     * 카메라 방향 설정 함수
+     * */
     override fun flipCameraFacing() {
         if (_facing.value == CameraSelector.LENS_FACING_BACK) {
             _facing.value = CameraSelector.LENS_FACING_FRONT
@@ -120,6 +129,9 @@ class CameraXImpl : CameraX {
         }
     }
 
+    /**
+     * 카메라 리소스 해제
+     * */
     override fun unBindCamera() {
         provider.unbindAll()
     }

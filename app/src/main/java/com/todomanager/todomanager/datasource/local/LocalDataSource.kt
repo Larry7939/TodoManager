@@ -1,10 +1,10 @@
-package com.todomanager.todomanager.datasource
+package com.todomanager.todomanager.datasource.local
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.todomanager.todomanager.dto.Profile
-import com.todomanager.todomanager.dto.Task
+import com.todomanager.todomanager.model.Profile
+import com.todomanager.todomanager.model.Task
 import com.todomanager.todomanager.util.devErrorLog
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.serialization.ExperimentalSerializationApi

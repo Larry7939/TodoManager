@@ -1,8 +1,8 @@
 package com.todomanager.todomanager.repository.local
 
-import com.todomanager.todomanager.datasource.LocalDataSource
-import com.todomanager.todomanager.dto.Profile
-import com.todomanager.todomanager.dto.Task
+import com.todomanager.todomanager.datasource.local.LocalDataSource
+import com.todomanager.todomanager.model.Profile
+import com.todomanager.todomanager.model.Task
 import javax.inject.Inject
 
 class LocalRepositoryImpl @Inject constructor(private val localDataSource: LocalDataSource) :

@@ -1,4 +1,4 @@
-package com.todomanager.todomanager.ui.screen
+package com.todomanager.todomanager.ui.task.screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -29,10 +29,11 @@ import androidx.navigation.NavController
 import com.todomanager.todomanager.R
 import com.todomanager.todomanager.constant.Destination
 import com.todomanager.todomanager.constant.NavArgKey
-import com.todomanager.todomanager.dto.Task
-import com.todomanager.todomanager.dto.TaskDate
+import com.todomanager.todomanager.model.Task
+import com.todomanager.todomanager.model.TaskDate
 import com.todomanager.todomanager.ui.button.CtaButton
 import com.todomanager.todomanager.ui.dialog.PickerDialog
+import com.todomanager.todomanager.ui.task.TaskViewModel
 import com.todomanager.todomanager.ui.textfield.InputTextField
 import com.todomanager.todomanager.ui.theme.G2
 import com.todomanager.todomanager.ui.theme.Typography
@@ -40,10 +41,11 @@ import com.todomanager.todomanager.ui.theme.Typography
 class TaskEditView {
     @Composable
     fun TaskEditScreen(navController: NavController, taskViewModel: TaskViewModel) {
+        // Task Name TextField Focus 상태 관리 변수
         val focusRequester = remember { FocusRequester() }
         val focusManager = LocalFocusManager.current
         val keyboardController = LocalSoftwareKeyboardController.current
-        var isEditTaskEnable by remember { mutableStateOf(false) }
+        var isEditTaskEnable by remember { mutableStateOf(false) } // Edit CTA 버튼 enabled 상태
         val task by taskViewModel.taskState.collectAsState()
         var taskId by remember { mutableStateOf<String?>(task?.id) }
         var taskName by remember { mutableStateOf(task?.name) }
@@ -51,8 +53,9 @@ class TaskEditView {
         var time by rememberSaveable { mutableStateOf("") }
         var isDatePickerDialogVisible by remember { mutableStateOf(false) }
         var isTimePickerDialogVisible by remember { mutableStateOf(false) }
-        taskId =
-            navController.currentBackStackEntry?.arguments?.getString(NavArgKey.TASK_ID_EDIT_KEY)
+
+        // Task Main으로부터 매개변수로 전달받은 taskId로 Task 조회
+        taskId = navController.currentBackStackEntry?.arguments?.getString(NavArgKey.TASK_ID_EDIT_KEY)
         LaunchedEffect(Unit) {
             taskId?.let {
                 taskViewModel.getTask(taskId)
@@ -63,6 +66,7 @@ class TaskEditView {
             taskName = task?.name
             taskDate = task?.taskDate
         }
+        // Task명, Date가 모두 있어야 Task 수정 가능함.
         LaunchedEffect(taskName, taskDate) {
             isEditTaskEnable = taskName?.isEmpty() == false && taskDate?.isEmpty()?.not() == true
         }
@@ -143,6 +147,9 @@ class TaskEditView {
         }
     }
 
+    /**
+     * Task Main 뷰로 navigate
+     * */
     private fun navigateToTaskMain(navController: NavController) {
         navController.navigate(Destination.TASK_MAIN) {
             popUpTo(Destination.TASK_ADD) {
@@ -152,6 +159,9 @@ class TaskEditView {
         }
     }
 
+    /**
+     * TextFiled 제외 다른 뷰 클릭 또는 키보드 완료 버튼 클릭 시 키보드 숨김 및 TextFieldFocus 해제
+     */
     private fun removeInputNameFocus(
         keyboardController: SoftwareKeyboardController?,
         focusManager: FocusManager

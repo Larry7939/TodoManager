@@ -1,4 +1,4 @@
-package com.todomanager.todomanager.dto
+package com.todomanager.todomanager.model
 
 import kotlinx.serialization.Serializable
 

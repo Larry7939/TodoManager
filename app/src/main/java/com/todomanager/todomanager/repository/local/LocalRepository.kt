@@ -1,7 +1,7 @@
 package com.todomanager.todomanager.repository.local
 
-import com.todomanager.todomanager.dto.Profile
-import com.todomanager.todomanager.dto.Task
+import com.todomanager.todomanager.model.Profile
+import com.todomanager.todomanager.model.Task
 
 interface LocalRepository {
     fun getTask(taskId: String?): Task?

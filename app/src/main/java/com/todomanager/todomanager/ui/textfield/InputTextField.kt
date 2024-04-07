@@ -32,7 +32,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.todomanager.todomanager.dto.TaskDate
+import com.todomanager.todomanager.model.TaskDate
 import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.G5
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
@@ -79,7 +79,7 @@ class InputTextField {
                 value = textState,
                 onValueChange = { newText ->
                     if (textState.length < maxLength || newText.length < textState.length) {
-                        textState = newText.filter { it.isEnglishLetter() }
+                        textState = newText.filter { it.isEnglishLetter() } // 영문만 입력 가능하도록 필터링
                         onTextChanged(textState)
                     }
                 },
@@ -166,6 +166,9 @@ class InputTextField {
         }
     }
 
+    /**
+     * 입력된 문자가 영문인지 여부를 확인하기 위한 함수
+     * */
     private fun Char.isEnglishLetter(): Boolean {
         val unicodeBlock = Character.UnicodeBlock.of(this)
         return (unicodeBlock == Character.UnicodeBlock.BASIC_LATIN)

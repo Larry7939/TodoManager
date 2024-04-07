@@ -1,4 +1,4 @@
-package com.todomanager.todomanager.ui.screen
+package com.todomanager.todomanager.ui.task.screen
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -51,7 +51,9 @@ import com.todomanager.todomanager.R
 import com.todomanager.todomanager.constant.Destination.TASK_ADD
 import com.todomanager.todomanager.constant.Destination.TASK_EDIT
 import com.todomanager.todomanager.constant.NavArgKey
-import com.todomanager.todomanager.dto.Task
+import com.todomanager.todomanager.model.Task
+import com.todomanager.todomanager.ui.screen.RegisterViewModel
+import com.todomanager.todomanager.ui.task.TaskViewModel
 import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.G2
 import com.todomanager.todomanager.ui.theme.G4
@@ -60,6 +62,9 @@ import kotlin.math.roundToInt
 
 class TaskMainView {
 
+    /**
+     * Task Main 뷰
+     * */
     @Composable
     fun TaskMainScreen(
         navController: NavHostController,
@@ -98,6 +103,7 @@ class TaskMainView {
                             .size(60.dp)
                             .clip(CircleShape),
                         painter = painter,
+                        // 프로필 이미지 흑백 처리
                         colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply {
                             setToSaturation(
                                 0f
@@ -111,9 +117,9 @@ class TaskMainView {
                 TaskList(
                     taskList
                 ) { index, direction ->
-                    if (direction == TODO_COMPLETE) {
+                    if (direction == TODO_COMPLETE) { // Task 완료(삭제)
                         taskViewModel.removeTask(taskList[index].id)
-                    } else if (direction == TODO_EDIT) {
+                    } else if (direction == TODO_EDIT) { // Task 수정 및 taskId를 매개변수로 전달
                         navController.navigate("$TASK_EDIT?${NavArgKey.TASK_ID_EDIT_KEY}=${taskList[index].id}")
                     }
                 }
@@ -128,6 +134,9 @@ class TaskMainView {
         }
     }
 
+    /**
+     * Task 추가 Floating Button
+     * */
     @Composable
     fun FloatingButton(modifier: Modifier, onClick: () -> Unit) {
         Box(
@@ -147,6 +156,9 @@ class TaskMainView {
         }
     }
 
+    /**
+     * Task가 없을 시 노출되는 Empty 뷰
+     * */
     @Composable
     fun EmptyTask(modifier: Modifier) {
         Column(modifier = modifier) {
@@ -167,6 +179,9 @@ class TaskMainView {
         }
     }
 
+    /**
+     * Task List
+     * */
     @Composable
     fun TaskList(todoList: List<Task>, onSwiped: (Int, String) -> Unit) {
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
@@ -182,6 +197,9 @@ class TaskMainView {
         }
     }
 
+    /**
+     * Task List를 구성하는 Task Item Row
+     * */
     @OptIn(ExperimentalWearMaterialApi::class)
     @Composable
     fun TaskRow(index: Int, todo: Task, onSwiped: (Int, String) -> Unit) {
@@ -197,6 +215,7 @@ class TaskMainView {
             )
             .offset { IntOffset(swipeableState.offset.value.roundToInt(), 0) }
 
+        // 스와이프 애니메이션 종료 시 스와이프 위치(offset)에 따른 완료 및 수정 이벤트 호출,
         LaunchedEffect(!swipeableState.isAnimationRunning) {
             if (swipeableState.offset.value == sizePx) {
                 swipeableState.animateTo(0, tween(200, 0))
@@ -254,6 +273,7 @@ class TaskMainView {
                         color = G2,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
+                        // Task의 텍스트 길이가 Task Date를 침범할 경우, 가운데점 (···) 처리
                         onTextLayout = { textLayoutResult ->
                             if (textLayoutResult.hasVisualOverflow) {
                                 val lineEndIndex = textLayoutResult.getLineEnd(
