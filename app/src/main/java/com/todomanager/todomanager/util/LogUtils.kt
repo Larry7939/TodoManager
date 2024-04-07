@@ -16,7 +16,7 @@ inline fun devTimberLog(crossinline block: () -> String) {
     }
 }
 
-fun devErrorLog(message: String) = Timber.tag(buildTag()).e(message)
+fun devErrorLog(message: String = "") = Timber.tag(buildTag()).e(message)
 
 private fun buildTag(): String =
     Thread.currentThread().stackTrace[4].let { ste ->
