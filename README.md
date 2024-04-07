@@ -19,7 +19,7 @@ Todo List 관리 앱 *TodoManager* 입니다.
 
 | 프로필 촬영 및 사용자 정보 등록 |
 |:----------:|
-| <video width="80%" src="https://github.com/Larry7939/TodoManager/assets/70442964/3aa5c889-b69e-465e-8f85-e608e2a90407"/> |
+| <video width="80%" src="https://github.com/Larry7939/TodoManager/assets/70442964/1e54362c-30bb-415a-9e26-1b2081ba81bf"/> |
 
 
 
