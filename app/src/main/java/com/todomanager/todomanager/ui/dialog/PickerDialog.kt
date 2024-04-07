@@ -26,6 +26,7 @@ class PickerDialog {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun CustomDatePickerDialog(
+        pattern: String,
         isFutureSelectable: Boolean,
         onDateSelected: (String) -> Unit,
         onDismiss: () -> Unit
@@ -42,33 +43,34 @@ class PickerDialog {
         }
 
         val selectedDate = datePickerState.selectedDateMillis?.let {
-            convertMillisToDate(it)
+            convertMillisToDate(pattern, it)
         } ?: ""
 
         DatePickerDialog(
             onDismissRequest = { onDismiss() },
             confirmButton = {
                 Button(
-                    colors = ButtonColors(B1,Color.White,B1,B1),
+                    colors = ButtonColors(B1, Color.White, B1, B1),
                     onClick = {
-                    onDateSelected(selectedDate)
-                    onDismiss()
-                }) { Text(text = stringResource(id = R.string.ok)) }
+                        onDateSelected(selectedDate)
+                        onDismiss()
+                    }) { Text(text = stringResource(id = R.string.ok)) }
             },
             dismissButton = {
                 Button(
-                    colors = ButtonColors(B1,Color.White,B1,B1),
+                    colors = ButtonColors(B1, Color.White, B1, B1),
                     onClick = {
-                    onDismiss()
-                }) { Text(text = stringResource(id = R.string.cancel)) }
+                        onDismiss()
+                    }) { Text(text = stringResource(id = R.string.cancel)) }
             }
         ) {
             DatePicker(state = datePickerState)
         }
     }
 
-    private fun convertMillisToDate(millis: Long): String {
-        val formatter = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
+
+    private fun convertMillisToDate(pattern: String, millis: Long): String {
+        val formatter = SimpleDateFormat(pattern, Locale.KOREA)
         return formatter.format(Date(millis))
     }
 }
