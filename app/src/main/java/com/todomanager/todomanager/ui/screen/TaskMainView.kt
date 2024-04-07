@@ -203,6 +203,16 @@ class TaskMainView {
                         color = G2,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
+                        onTextLayout = { textLayoutResult ->
+                            if (textLayoutResult.hasVisualOverflow) {
+                                val lineEndIndex = textLayoutResult.getLineEnd(
+                                    lineIndex = 0,
+                                    visibleEnd = true
+                                )
+                                todo.name = todo.name.substring(0, lineEndIndex) + "···"
+                            }
+                        }
+                    )
                     Spacer(modifier = Modifier.width(5.dp))
                     Text(
                         modifier = Modifier
