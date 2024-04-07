@@ -118,9 +118,34 @@ class TaskMainView {
                         navController.navigate("$TASK_EDIT?${NavArgKey.TASK_ID_EDIT_KEY}=${taskList[index].id}")
                     }
                 }
+            }
+            FloatingButton(
+                Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(bottom = 45.dp, end = 20.dp)) {
+                navController.navigate(TASK_ADD)
+            }
         }
     }
 
+    @Composable
+    fun FloatingButton(modifier: Modifier, onClick: () -> Unit) {
+        Box(
+            modifier = modifier
+                .size(55.dp)
+                .clip(CircleShape)
+                .background(B1)
+                .clickable { onClick() }
+        ) {
+            Image(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(Alignment.Center),
+                painter = painterResource(id = R.drawable.ic_add_todo),
+                contentDescription = ""
+            )
+        }
+    }
 
     @Composable
     fun TaskList(todoList: List<Task>, onSwiped: (Int, String) -> Unit) {
