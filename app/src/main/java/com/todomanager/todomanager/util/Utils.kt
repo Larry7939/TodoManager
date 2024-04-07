@@ -5,6 +5,7 @@ import android.content.Context
 import android.widget.Toast
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import java.util.UUID
 
 object Utils {
     fun Context.showToast(message: String){
@@ -25,5 +26,8 @@ object Utils {
             .setDeniedMessage("권한을 허용해주세요. [설정] > [앱 및 알림] > [고급] > [앱 권한]")
             .setPermissions(permission)
             .check()
+    }
+    fun createTaskId(): String {
+        return UUID.randomUUID().toString()
     }
 }
