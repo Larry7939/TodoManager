@@ -173,7 +173,7 @@ class TaskMainView {
             Text(
                 text = stringResource(id = R.string.empty_todo),
                 textAlign = TextAlign.Center,
-                style = Typography.headlineSmall,
+                style = Typography.bodyMedium,
                 color = G4
             )
         }

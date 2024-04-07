@@ -12,6 +12,7 @@ import com.todomanager.todomanager.R
 val roboto = FontFamily(
     Font(R.font.roboto_bold_italic, FontWeight.Bold),
     Font(R.font.roboto_bold, FontWeight.Black),
+    Font(R.font.roboto_bold, FontWeight.SemiBold ),
     Font(R.font.roboto_medium, FontWeight.Medium),
     Font(R.font.roboto_regular, FontWeight.Normal),
 )
@@ -36,7 +37,7 @@ val Typography = Typography(
     ),
     bodyMedium = TextStyle(
         fontFamily = roboto,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 20.sp
     ),
     displayLarge = TextStyle(
