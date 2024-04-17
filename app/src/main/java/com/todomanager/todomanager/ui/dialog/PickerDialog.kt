@@ -18,6 +18,8 @@ import androidx.compose.ui.res.stringResource
 import com.todomanager.todomanager.R
 import com.todomanager.todomanager.ui.theme.B1
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneOffset
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -43,7 +45,8 @@ class PickerDialog {
         } else if (isFutureSelectable && !isPastSelectable) {
             val selectableDates = object : SelectableDates {
                 override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                    return utcTimeMillis >= System.currentTimeMillis()
+                    return utcTimeMillis >= LocalDate.now().atStartOfDay().toInstant(ZoneOffset.UTC)
+                        .toEpochMilli()
                 }
             }
             rememberDatePickerState(selectableDates = selectableDates)
