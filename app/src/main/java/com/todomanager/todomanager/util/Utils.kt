@@ -1,9 +1,14 @@
 package com.todomanager.todomanager.util
 
+import android.app.ActivityManager
 import android.content.Context
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.UUID
 
 object Utils {
@@ -27,7 +32,25 @@ object Utils {
             .check()
     }
 
+    fun Context.isServiceRunning(serviceName: String): Boolean {
+        val activityManager =
+            getSystemService(ComponentActivity.ACTIVITY_SERVICE) as ActivityManager
+        for (service in activityManager.getRunningServices(Int.MAX_VALUE)) {
+            if (serviceName == service.service.className) {
+                return true
+            }
+        }
+        return false
+    }
+
     fun createTaskId(): String {
         return UUID.randomUUID().toString()
+    }
+
+    fun convertMillisToDate(pattern: String, millis: Long): String {
+        val formatter = SimpleDateFormat(pattern, Locale.US).apply {
+            timeZone = TimeZone.getTimeZone("GMT+09:00")
+        }
+        return formatter.format(Date(millis))
     }
 }

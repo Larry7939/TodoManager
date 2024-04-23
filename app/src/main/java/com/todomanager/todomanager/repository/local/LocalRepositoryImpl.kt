@@ -27,6 +27,10 @@ class LocalRepositoryImpl @Inject constructor(private val localDataSource: Local
         return localDataSource.getTaskList()
     }
 
+    override fun findTaskByTaskDate(taskDate: String): List<Task> {
+        return localDataSource.findTaskByTaskDate(taskDate)
+    }
+
     override fun setIsRegistered(isRegistered: Boolean) {
         localDataSource.setIsRegistered(isRegistered)
     }

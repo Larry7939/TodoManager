@@ -1,5 +1,6 @@
 package com.todomanager.todomanager.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,27 +15,31 @@ import androidx.navigation.navArgument
 import com.todomanager.todomanager.constant.Destination
 import com.todomanager.todomanager.constant.NavArgKey.PROFILE_IMAGE_KEY
 import com.todomanager.todomanager.constant.NavArgKey.TASK_ID_EDIT_KEY
-import com.todomanager.todomanager.ui.screen.CameraView
+import com.todomanager.todomanager.service.TaskNotificationService
+import com.todomanager.todomanager.ui.register.RegisterViewModel
 import com.todomanager.todomanager.ui.register.screen.RegisterCompleteView
 import com.todomanager.todomanager.ui.register.screen.RegisterView
-import com.todomanager.todomanager.ui.screen.RegisterViewModel
-import com.todomanager.todomanager.ui.screen.SplashView
+import com.todomanager.todomanager.ui.screen.CameraView
+import com.todomanager.todomanager.ui.splash.SplashView
+import com.todomanager.todomanager.ui.task.TaskViewModel
 import com.todomanager.todomanager.ui.task.screen.TaskAddView
 import com.todomanager.todomanager.ui.task.screen.TaskEditView
 import com.todomanager.todomanager.ui.task.screen.TaskMainView
-import com.todomanager.todomanager.ui.task.TaskViewModel
 import com.todomanager.todomanager.ui.theme.TodoManagerTheme
+import com.todomanager.todomanager.util.Utils.isServiceRunning
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
-            val registerViewModel: RegisterViewModel = hiltViewModel()
-            val taskViewModel: TaskViewModel = hiltViewModel()
-            val navController = rememberNavController()
             TodoManagerTheme {
+                val navController = rememberNavController()
+                val registerViewModel: RegisterViewModel = hiltViewModel()
+                val taskViewModel: TaskViewModel = hiltViewModel()
                 NavHost(navController = navController, startDestination = Destination.SPLASH) {
                     composable(Destination.SPLASH) {
                         SplashView().SplashScreen(navController, registerViewModel)
@@ -87,6 +92,10 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+        }
+        if (isServiceRunning(TaskNotificationService::class.java.name).not()) {
+            val intent = Intent(this, TaskNotificationService::class.java)
+            startForegroundService(intent)
         }
     }
 
