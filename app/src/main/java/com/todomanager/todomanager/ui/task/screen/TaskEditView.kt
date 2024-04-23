@@ -152,7 +152,7 @@ class TaskEditView {
      * */
     private fun navigateToTaskMain(navController: NavController) {
         navController.navigate(Destination.TASK_MAIN) {
-            popUpTo(Destination.TASK_ADD) {
+            popUpTo(Destination.TASK_EDIT) {
                 inclusive = true
             }
             launchSingleTop = true
