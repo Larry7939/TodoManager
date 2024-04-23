@@ -96,7 +96,7 @@ class PickerDialog {
         val context = LocalContext.current
         val timePickerDialog = TimePickerDialog(
             context,
-            { view, hourOfDay, minute ->
+            { _, hourOfDay, minute ->
                 val adjustedHour = if (hourOfDay > 12) {
                     hourOfDay - 12
                 } else if (hourOfDay == 0) {
