@@ -17,12 +17,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.todomanager.todomanager.R
 import com.todomanager.todomanager.ui.theme.B1
-import java.text.SimpleDateFormat
+import com.todomanager.todomanager.util.Utils.convertMillisToDate
 import java.time.LocalDate
 import java.time.ZoneOffset
 import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 
 class PickerDialog {
 
@@ -101,6 +99,8 @@ class PickerDialog {
             { view, hourOfDay, minute ->
                 val adjustedHour = if (hourOfDay > 12) {
                     hourOfDay - 12
+                } else if (hourOfDay == 0) {
+                    12
                 } else {
                     hourOfDay
                 }
@@ -120,10 +120,5 @@ class PickerDialog {
         )
         timePickerDialog.setOnCancelListener { onDismiss() }
         return timePickerDialog
-    }
-
-    private fun convertMillisToDate(pattern: String, millis: Long): String {
-        val formatter = SimpleDateFormat(pattern, Locale.KOREA)
-        return formatter.format(Date(millis))
     }
 }

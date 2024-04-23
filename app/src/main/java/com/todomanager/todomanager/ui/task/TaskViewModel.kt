@@ -104,7 +104,7 @@ class TaskViewModel @Inject constructor(private val localRepositoryImpl: LocalRe
      * */
     private fun sortTaskList(taskList: List<Task>): List<Task> {
         val parseDate: (String) -> LocalDateTime = {
-            val formatter = DateTimeFormatter.ofPattern("yyyy MM/dd h:mm a", Locale.ENGLISH)
+            val formatter = DateTimeFormatter.ofPattern("yyyy MM/dd h:mm a", Locale.US)
             LocalDateTime.parse(it, formatter)
         }
 
