@@ -9,6 +9,7 @@ import com.gun0912.tedpermission.normal.TedPermission
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 import java.util.UUID
 
 object Utils {
@@ -16,7 +17,12 @@ object Utils {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    fun requestPermission(context: Context, permission: String, logic: () -> Unit) {
+    fun requestPermission(
+        context: Context,
+        permission: String,
+        messageOnDenied: String,
+        logic: () -> Unit
+    ) {
         TedPermission.create()
             .setPermissionListener(object : PermissionListener {
                 override fun onPermissionGranted() {
@@ -24,7 +30,7 @@ object Utils {
                 }
 
                 override fun onPermissionDenied(deniedPermission: List<String>) {
-                    context.showToast("권한을 허가해주세요.")
+                    context.showToast(messageOnDenied)
                 }
             })
             .setDeniedMessage("권한을 허용해주세요. [설정] > [앱 및 알림] > [고급] > [앱 권한]")

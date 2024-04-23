@@ -55,7 +55,7 @@ import com.todomanager.todomanager.constant.NavArgKey.PROFILE_IMAGE_KEY
 import com.todomanager.todomanager.model.Profile
 import com.todomanager.todomanager.ui.button.CtaButton
 import com.todomanager.todomanager.ui.dialog.PickerDialog
-import com.todomanager.todomanager.ui.screen.RegisterViewModel
+import com.todomanager.todomanager.ui.register.RegisterViewModel
 import com.todomanager.todomanager.ui.textfield.InputTextField
 import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.Typography
@@ -218,7 +218,11 @@ class RegisterView {
                 .clip(CircleShape)
                 .background(B1)
                 .clickable {
-                    requestPermission(context = context, permission = Manifest.permission.CAMERA) {
+                    requestPermission(
+                        context = context,
+                        permission = Manifest.permission.CAMERA,
+                        context.getString(R.string.need_permission_photo)
+                    ) {
                         onClick()
                     }
                 }

@@ -16,4 +16,6 @@
     <string name="todo_list">TODO LIST</string>
     <string name="add_task">ADD TASK</string>
     <string name="edit_task">EDIT TASK</string>
+    <string name="need_permission_photo">사진 촬영을 위한\n권한 설정이 필요합니다.</string>
+    <string name="need_permission_notification">테스크 알림을 받으려면\n권한 설정이 필요합니다.</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.todomanager.todomanager.ui.task.screen
 
+import android.Manifest
+import android.os.Build
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -52,15 +55,26 @@ import com.todomanager.todomanager.constant.Destination.TASK_ADD
 import com.todomanager.todomanager.constant.Destination.TASK_EDIT
 import com.todomanager.todomanager.constant.NavArgKey
 import com.todomanager.todomanager.model.Task
-import com.todomanager.todomanager.ui.screen.RegisterViewModel
+import com.todomanager.todomanager.ui.register.RegisterViewModel
 import com.todomanager.todomanager.ui.task.TaskViewModel
 import com.todomanager.todomanager.ui.theme.B1
 import com.todomanager.todomanager.ui.theme.G2
 import com.todomanager.todomanager.ui.theme.G4
 import com.todomanager.todomanager.ui.theme.Typography
+import com.todomanager.todomanager.util.Utils.requestPermission
 import kotlin.math.roundToInt
 
 class TaskMainView {
+    @Composable
+    fun RequestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermission(
+                LocalContext.current,
+                Manifest.permission.POST_NOTIFICATIONS,
+                stringResource(id = R.string.need_permission_notification)
+            ) {}
+        }
+    }
 
     /**
      * Task Main 뷰
@@ -75,6 +89,7 @@ class TaskMainView {
             registerViewModel.getProfile()
             taskViewModel.loadTaskList()
         }
+        RequestNotificationPermission()
 
         val profile by registerViewModel.profileState.collectAsState()
         val painter = rememberAsyncImagePainter(profile.uri)
