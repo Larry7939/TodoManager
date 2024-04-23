@@ -6,14 +6,12 @@ import androidx.core.content.edit
 import com.todomanager.todomanager.model.Profile
 import com.todomanager.todomanager.model.Task
 import com.todomanager.todomanager.util.devErrorLog
-import com.todomanager.todomanager.util.devTimberLog
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import okhttp3.internal.filterList
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -76,7 +74,7 @@ class LocalDataSource @Inject constructor(
 
     fun findTaskByTaskDate(taskDate: String): List<Task> {
         val taskList = getTaskList()
-        return taskList.filter{ it.taskDate.toString() == taskDate }
+        return taskList.filter { it.taskDate.toString() == taskDate }
     }
 
     fun setProfile(profile: Profile) {
@@ -107,7 +105,6 @@ class LocalDataSource @Inject constructor(
     }
 
     fun getIsRegistered(): Boolean {
-        devTimberLog { "jh: isRegistered ${prefs.getBoolean(KEY_IS_REGISTERED, false)}" }
         return prefs.getBoolean(KEY_IS_REGISTERED, false)
     }
 
