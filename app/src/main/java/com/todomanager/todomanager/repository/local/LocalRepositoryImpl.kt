@@ -7,43 +7,43 @@ import javax.inject.Inject
 
 class LocalRepositoryImpl @Inject constructor(private val localDataSource: LocalDataSource) :
     LocalRepository {
-    override fun getTask(taskId: String?): Task? {
+    override suspend fun getTask(taskId: String?): Task? {
         return localDataSource.getTask(taskId)
     }
 
-    override fun editTask(task: Task?) {
+    override suspend fun editTask(task: Task?) {
         localDataSource.editTask(task)
     }
 
-    override fun addTask(task: Task) {
+    override suspend fun addTask(task: Task) {
         localDataSource.addTask(task)
     }
 
-    override fun removeTask(taskId: String) {
+    override suspend fun removeTask(taskId: String) {
         localDataSource.removeTask(taskId)
     }
 
-    override fun getTaskList(): List<Task> {
+    override suspend fun getTaskList(): List<Task> {
         return localDataSource.getTaskList()
     }
 
-    override fun findTaskByTaskDate(taskDate: String): List<Task> {
+    override suspend fun findTaskByTaskDate(taskDate: String): List<Task> {
         return localDataSource.findTaskByTaskDate(taskDate)
     }
 
-    override fun setIsRegistered(isRegistered: Boolean) {
+    override suspend fun setIsRegistered(isRegistered: Boolean) {
         localDataSource.setIsRegistered(isRegistered)
     }
 
-    override fun getIsRegistered(): Boolean {
+    override suspend fun getIsRegistered(): Boolean {
         return localDataSource.getIsRegistered()
     }
 
-    override fun setProfile(profile: Profile) {
+    override suspend fun setProfile(profile: Profile) {
         localDataSource.setProfile(profile)
     }
 
-    override fun getProfile(): Profile {
+    override suspend fun getProfile(): Profile {
         return localDataSource.getProfile()
     }
 }
