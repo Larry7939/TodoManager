@@ -41,7 +41,7 @@ class TaskNotificationService : Service() {
             while (true) {
                 delay(60000L)
                 time += 1
-                val pattern = "yy'' MM/dd hh:mm a"
+                val pattern = "yy'' MM/dd h:mm a"
                 val taskDate = convertMillisToDate(pattern, System.currentTimeMillis())
                 val taskList = localRepository.findTaskByTaskDate(taskDate)
                 for (task in taskList) {
