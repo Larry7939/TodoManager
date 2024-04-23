@@ -25,12 +25,14 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TaskNotificationService : Service() {
-    @Inject lateinit var localRepository: LocalRepository
+    @Inject
+    lateinit var localRepository: LocalRepository
+
     @RequiresApi(Build.VERSION_CODES.Q)
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val intentToMain = Intent(this, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(this, 0, intentToMain, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent =
+            PendingIntent.getActivity(this, 0, intentToMain, PendingIntent.FLAG_IMMUTABLE)
         var time = 0
         var notificationId = System.currentTimeMillis().toInt()
 
@@ -47,7 +49,8 @@ class TaskNotificationService : Service() {
                 for (task in taskList) {
                     notification.setContentText(task.name)
                     manager.notify(notificationId, notification.build())
-                    notificationId = System.currentTimeMillis().toInt() // Notification ID를 매번 갱신해줌으로써 매번 다른 알림을 띄워준다.
+                    notificationId = System.currentTimeMillis()
+                        .toInt() // Notification ID를 매번 갱신해줌으로써 매번 다른 알림을 띄워준다.
                 }
             }
         }
@@ -64,7 +67,7 @@ class TaskNotificationService : Service() {
         // notiBuilder: TodoManagerApplication에서 만든 notification channel을 바탕으로 notification의 출력 형태 지정
         // 채널 ID를 전달해주지 않으면 Deprecated 되었음을 알려준다.
         return NotificationCompat.Builder(this, TASK_CHANNEL_ID)
-            .setContentTitle("예정된 테스크가 있어요!")
+            .setContentTitle(getString(R.string.task_notification_now))
             .setSmallIcon(R.drawable.todolist_logo)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true) // 클릭 후에 자동으로 Notification 취소
