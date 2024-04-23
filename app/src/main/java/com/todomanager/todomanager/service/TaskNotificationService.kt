@@ -15,9 +15,9 @@ import com.todomanager.todomanager.repository.local.LocalRepository
 import com.todomanager.todomanager.ui.MainActivity
 import com.todomanager.todomanager.util.Utils.convertMillisToDate
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,7 +36,7 @@ class TaskNotificationService : Service() {
 
         val notification = createNotification(pendingIntent)
         startForeground(notificationId, createEmptyNotification())
-        GlobalScope.launch(Dispatchers.IO) {
+        CoroutineScope(CoroutineName("NotificationCoroutine") + Dispatchers.IO).launch {
             val manager = getSystemService(NotificationManager::class.java)
             while (true) {
                 delay(60000L)
