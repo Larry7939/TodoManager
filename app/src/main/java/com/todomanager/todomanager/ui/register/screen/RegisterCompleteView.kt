@@ -30,7 +30,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.todomanager.todomanager.R
 import com.todomanager.todomanager.constant.Destination.TASK_MAIN
 import com.todomanager.todomanager.ui.button.CtaButton
-import com.todomanager.todomanager.ui.screen.RegisterViewModel
+import com.todomanager.todomanager.ui.register.RegisterViewModel
 import com.todomanager.todomanager.ui.theme.G2
 import com.todomanager.todomanager.ui.theme.Typography
 
